@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayGain - Financial Services</title>
+    <link rel="icon" type="image/png" href="assets/images/Logo.png">
+    <!-- Tailwind CSS for Professional Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* UPDATED BRAND COLORS (Vibrant Pink) */
+        :root {
+            --primary-blue: #0f172a; 
+            --accent-pink: #ec4899;  
+            --pink-hover: #db2777;   
+            --text-grey: #475569;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* View Transition Animation */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* FAQ Styling */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
+        @keyframes sweep {
+            0%    {opacity: 0; transform: translateY(-10px)}
+            100%  {opacity: 1; transform: translateY(0)}
+        }
+        details[open] .fa-chevron-down { transform: rotate(180deg); }
+
+        /* Marquee Animation for Logos */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content; 
+            animation: marquee 30s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* Modal Styles */
+        .modal {
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+        }
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Blob Backgrounds */
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.4;
+        }
+    </style>
+    <!-- Supabase Meta Tags for Market Data Fetching -->
+    <meta name="supabase-url" content="https://lgzepbfzjbeyfsdormde.supabase.co">
+    <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnemVwYmZ6amJleWZzZG9ybWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMDMzNTEsImV4cCI6MjA5MDY3OTM1MX0.xV82gm7YjlT7-A3uMtnQPnpYOGBL4VkEgyjRY6IPFE4">
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- ============================================ -->
+    <!-- VIEW 1: LANDING PAGE -->
+    <!-- ============================================ -->
+    <div id="landingPage" class="fade-in">
+        
+        <!-- HEADER -->
+        <header class="fixed w-full top-0 z-50 transition-all duration-300 bg-slate-900 shadow-lg border-b border-slate-800">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 group cursor-pointer" onclick="window.location.href='index.html'">
+                    <img src="assets/images/pg_logo_no_background.png" alt="PayGain Logo" class="h-12 w-auto object-contain group-hover:opacity-90 transition">
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <a href="about_us.html" class="hidden md:block text-slate-300 hover:text-pink-400 font-semibold transition">
+                        About Us
+                    </a>
+                    <a href="pulse.html" class="text-slate-300 hover:text-pink-400 font-semibold transition text-sm md:text-base">
+                        PayGain Pulse
+                    </a>
+                    <a href="analysis_form.html" class="hidden md:block bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-semibold py-2.5 px-6 rounded-full shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 hover:-translate-y-0.5 transition-all duration-300">
+                        Get Analysis
+                    </a>
+                    <button onclick="toggleModal('loginModal')" class="border-2 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white font-semibold py-2 px-6 rounded-full transition-all duration-300">
+                        Login
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="h-20"></div>
+
+        <!-- HERO SECTION (Updated to Split Layout) -->
+        <section class="relative bg-slate-900 text-white pt-20 pb-32 overflow-hidden">
+            <!-- Background Elements -->
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900"></div>
+            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+            <div class="blob bg-pink-600 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="blob bg-blue-600 w-96 h-96 rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2"></div>
+
+            <div class="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12">
+                
+                <!-- Left Content -->
+                <div class="md:w-1/2 text-center md:text-left">
+                    <div class="inline-block px-4 py-1.5 rounded-full border border-pink-500/30 bg-pink-500/10 text-pink-300 text-sm font-semibold mb-6 animate-float">
+                        <i class="fas fa-star mr-2 text-pink-500"></i> Trusted by 500+ Families
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-tight reveal active">
+                        Build Wealth <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-300">Beyond Basic Insurance</span>
+                    </h1>
+                    <p class="text-xl text-slate-300 mb-10 leading-relaxed max-w-lg mx-auto md:mx-0 reveal active" style="transition-delay: 0.1s;">
+                        Transform mandatory insurance costs into active investments. We combine capital protection with high-growth equity strategies.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start reveal active" style="transition-delay: 0.2s;">
+                        <a href="analysis_form.html" class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 px-10 rounded-full shadow-xl shadow-pink-500/40 hover:-translate-y-1 transition-all inline-block text-center">
+                            Request Portfolio Analysis
+                        </a>
+                        <button class="flex items-center justify-center gap-2 text-white font-semibold py-4 px-8 rounded-full border border-slate-600 hover:bg-white/10 transition-all">
+                            <i class="fas fa-play-circle text-pink-500 text-xl"></i> See How It Works
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Illustration -->
+                <div class="md:w-1/2 reveal active" style="transition-delay: 0.3s;">
+                    <div class="relative">
+                        <!-- Main Image Placeholder -->
+                        <img src="assets/images/index_placeholder_replacement.png" alt="Future Wealth Visual" class="rounded-3xl shadow-2xl border border-slate-700 w-full animate-float object-cover">
+                        
+                        <!-- Floating Cards -->
+
+                        <div class="absolute -top-6 -right-6 bg-white p-4 rounded-xl shadow-lg flex items-center gap-3 animate-float" style="animation-delay: 1s; animation-duration: 7s;">
+                            <div class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600"><i class="fas fa-shield-alt"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-500 font-bold">Status</p>
+                                <p class="text-slate-900 font-bold">Protected</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS BAR -->
+        <section class="bg-slate-900 border-t border-slate-800 py-10">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-800/50">
+                    <div class="reveal active">
+                        <p class="text-3xl font-bold text-white mb-1">500+</p>
+                        <p class="text-sm text-slate-400 uppercase tracking-wider">Happy Families</p>
+                    </div>
+                    <div class="reveal active" style="transition-delay: 0.1s;">
+                        <p class="text-3xl font-bold text-white mb-1">₹50Cr+</p>
+                        <p class="text-sm text-slate-400 uppercase tracking-wider">Wealth Managed</p>
+                    </div>
+                    <div class="reveal active" style="transition-delay: 0.2s;">
+                        <p class="text-3xl font-bold text-white mb-1">100%</p>
+                        <p class="text-sm text-slate-400 uppercase tracking-wider">Transparency</p>
+                    </div>
+                    <div class="reveal active" style="transition-delay: 0.3s;">
+                        <p class="text-3xl font-bold text-white mb-1">10+</p>
+                        <p class="text-sm text-slate-400 uppercase tracking-wider">Cities Covered</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIFFERENTIATION -->
+        <section class="py-24 bg-white relative">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-16 reveal">Why Choose PayGain?</h2>
+                <div class="flex flex-wrap justify-center gap-8">
+                    <!-- Card 1 -->
+                    <div class="w-full md:w-1/3 lg:w-1/4 p-8 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-pink-500/10 hover:-translate-y-2 transition-all duration-300 group reveal">
+                        <div class="w-16 h-16 mx-auto bg-pink-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-pink-100 transition"><i class="fas fa-shield-alt text-3xl text-pink-500"></i></div>
+                        <h3 class="font-bold text-xl mb-3 text-slate-800">Protected Returns</h3>
+                        <p class="text-slate-500 leading-relaxed">We ensure your insurance works for you, not against you.</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="w-full md:w-1/3 lg:w-1/4 p-8 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-pink-500/10 hover:-translate-y-2 transition-all duration-300 group reveal" style="transition-delay: 0.1s;">
+                        <div class="w-16 h-16 mx-auto bg-pink-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-pink-100 transition"><i class="fas fa-chart-line text-3xl text-pink-500"></i></div>
+                        <h3 class="font-bold text-xl mb-3 text-slate-800">Focus on You</h3>
+                        <p class="text-slate-500 leading-relaxed">Strategies tailored to your specific financial freedom goals.</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="w-full md:w-1/3 lg:w-1/4 p-8 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-pink-500/10 hover:-translate-y-2 transition-all duration-300 group reveal" style="transition-delay: 0.2s;">
+                        <div class="w-16 h-16 mx-auto bg-pink-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-pink-100 transition"><i class="fas fa-user-check text-3xl text-pink-500"></i></div>
+                        <h3 class="font-bold text-xl mb-3 text-slate-800">Expert Advice</h3>
+                        <p class="text-slate-500 leading-relaxed">Backed by IRDAI & SEBI registered expertise.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES (Bento Grid Upgrade - WEALTH CREATION FOCUS) -->
+        <section class="py-24 bg-slate-50 relative overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-pink-500 font-bold tracking-wider uppercase text-sm">Core Strategies</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2 reveal">Targeted Wealth Management</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- FULL WIDTH HERO CARD: General Insurance -->
+                    <div class="md:col-span-3 bg-slate-900 p-8 md:p-12 rounded-3xl shadow-xl hover:shadow-2xl transition border border-slate-800 flex flex-col md:flex-row items-center gap-10 reveal text-white">
+                        <div class="flex-1">
+                            <div class="inline-block px-3 py-1 bg-pink-500/20 text-pink-300 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">Primary Service</div>
+                            <h3 class="text-3xl md:text-4xl font-bold mb-4">General Insurance</h3>
+                            <p class="text-slate-300 mb-6 text-lg leading-relaxed">
+                                Experience a unique, tailored strategy designed to return your premiums, even after you have secured comprehensive Car or Health Insurance coverage.
+                            </p>
+                            
+                            <!-- Benefits List -->
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center gap-3 text-slate-300"><i class="fas fa-check-circle text-green-400 text-lg"></i> <span>Return of Premium Mechanics</span></li>
+                                <li class="flex items-center gap-3 text-slate-300"><i class="fas fa-check-circle text-green-400 text-lg"></i> <span>Comprehensive Asset & Health Protection</span></li>
+                                <li class="flex items-center gap-3 text-slate-300"><i class="fas fa-check-circle text-green-400 text-lg"></i> <span>Zero Net Cost Strategy</span></li>
+                            </ul>
+
+                            <a href="analysis_form.html" class="inline-block py-3 px-8 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 font-bold shadow-lg shadow-pink-900/50 transition transform hover:-translate-y-1 text-center">
+                                Secure Your Assets
+                            </a>
+                        </div>
+                        
+                        <!-- Visual for General Insurance -->
+                        <div class="w-full md:w-1/3 bg-slate-800/50 rounded-2xl p-6 flex flex-col items-center justify-center border border-slate-700">
+                             <div class="w-20 h-20 bg-pink-500/10 rounded-full flex items-center justify-center text-pink-400 mb-4">
+                                <i class="fas fa-car-side text-4xl"></i>
+                            </div>
+                            <p class="text-center text-sm text-slate-400">Premiums Returned</p>
+                            <p class="text-center text-3xl font-bold text-white mt-1">100%</p>
+                            <div class="w-full h-1.5 bg-slate-700 rounded-full mt-4 overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-pink-500 to-rose-400 w-full"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Secondary Card 1: Wealth Creation -->
+                    <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition border border-slate-100 reveal" style="transition-delay: 0.1s;">
+                        <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600 mb-4"><i class="fas fa-coins text-xl"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-slate-900">Wealth Creation</h3>
+                        <p class="text-slate-500 text-sm mb-4">Build long-term generational wealth by strategically combining high-growth equity markets with insurance. <strong>Outpace Inflation: Targeting 12-15% Annualized Returns.</strong></p>
+                        <a href="analysis_form.html" class="text-slate-600 font-semibold text-sm hover:text-pink-600 transition">View Strategy <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+
+                    <!-- Secondary Card 2: Child Future -->
+                    <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition border border-slate-100 reveal" style="transition-delay: 0.2s;">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-500 mb-4"><i class="fas fa-graduation-cap text-xl"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-slate-900">Child's Future</h3>
+                        <p class="text-slate-500 text-sm mb-4">Secure their education and marriage with planned maturity benefits and timelines.</p>
+                         <a href="#" class="text-blue-600 font-semibold text-sm hover:underline">Plan Now <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+
+                    <!-- Secondary Card 3: Health Insurance -->
+                    <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition border border-slate-100 reveal" style="transition-delay: 0.3s;">
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-500 mb-4"><i class="fas fa-heartbeat text-xl"></i></div>
+                        <h3 class="text-xl font-bold mb-2 text-slate-900">Health Insurance</h3>
+                        <p class="text-slate-500 text-sm mb-4">Comprehensive coverage that protects your savings from medical emergencies.</p>
+                         <a href="#" class="text-green-600 font-semibold text-sm hover:underline">Get Protected <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARTNERS BANNER -->
+        <section class="bg-slate-900 py-16 reveal">
+            <div class="container mx-auto px-6">
+                <!-- Join Network / Advisor Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                    <!-- Channel Partner Card -->
+                    <div class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-3xl p-8 md:p-10 flex flex-col justify-between border border-slate-700 shadow-2xl relative overflow-hidden group">
+                        <div class="absolute -right-10 -top-10 text-slate-700/30 text-9xl group-hover:scale-110 transition-transform duration-500"><i class="fas fa-handshake"></i></div>
+                        <div class="relative z-10 text-white mb-8">
+                            <h3 class="text-3xl font-bold mb-3">Become a Channel Partner</h3>
+                            <p class="text-slate-400 text-lg leading-relaxed">Join our extensive network of financial service providers and grow your business with us.</p>
+                        </div>
+                        <div class="relative z-10 text-left">
+                            <button class="bg-transparent border-2 border-slate-600 text-white px-8 py-3 rounded-full hover:bg-pink-600 hover:border-pink-600 transition-all duration-300 font-semibold hover:shadow-lg hover:shadow-pink-500/30 w-full sm:w-auto">
+                                Join Network
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PayGain Advisor Card -->
+                    <div class="bg-gradient-to-r from-pink-900 to-slate-900 rounded-3xl p-8 md:p-10 flex flex-col justify-between border border-pink-900 shadow-2xl relative overflow-hidden group">
+                        <!-- Background Ribbon Effect -->
+                        <div class="absolute -right-20 -top-20 w-64 h-64 bg-pink-600/20 rounded-full blur-3xl group-hover:bg-pink-500/30 transition-colors duration-500"></div>
+                        <div class="absolute top-0 right-10 w-12 h-full bg-gradient-to-b from-white/0 via-white/5 to-white/0 skew-x-12 translate-x-20 group-hover:-translate-x-full transition-transform duration-1000"></div>
+                        
+                        <div class="relative z-10 text-white mb-8">
+                            <h3 class="text-3xl font-bold mb-3">Become a PayGain Advisor</h3>
+                            <p class="text-pink-200/80 text-lg leading-relaxed">Build your career by empowering families to achieve true financial freedom and security.</p>
+                        </div>
+                        <div class="relative z-10 text-left">
+                            <a href="career.html" class="inline-block bg-pink-600 text-white px-8 py-3 rounded-full hover:bg-pink-500 transition-all duration-300 font-bold hover:shadow-lg hover:shadow-pink-500/40 border-2 border-pink-500 w-full sm:w-auto text-center">
+                                View Openings
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scrolling Partner Logos -->
+                <div class="text-center">
+                    <p class="text-slate-500 uppercase tracking-widest text-sm font-semibold mb-8">Our Trusted Partners</p>
+                    <div class="relative w-full overflow-hidden">
+                        <div class="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-slate-900 to-transparent z-10"></div>
+                        <div class="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-slate-900 to-transparent z-10"></div>
+                        <div class="animate-marquee flex items-center gap-12 sm:gap-16">
+                            <img src="assets/images/tata.png" alt="TATA AIG" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                            <img src="assets/images/niva.avif" alt="Niva Bupa" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                            <img src="assets/images/bajaj-life-logo.avif" alt="Bajaj Life" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                            <!-- Duplicates for seamless looping -->
+                            <img src="assets/images/tata.png" alt="TATA AIG" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                            <img src="assets/images/niva.avif" alt="Niva Bupa" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                            <img src="assets/images/bajaj-life-logo.avif" alt="Bajaj Life" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                            <img src="assets/images/tata.png" alt="TATA AIG" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                            <img src="assets/images/niva.avif" alt="Niva Bupa" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                            <img src="assets/images/bajaj-life-logo.avif" alt="Bajaj Life" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                            <img src="assets/images/tata.png" alt="TATA AIG" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                            <img src="assets/images/niva.avif" alt="Niva Bupa" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                            <img src="assets/images/bajaj-life-logo.avif" alt="Bajaj Life" class="h-16 transition duration-300 object-contain max-w-[160px]">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS (New) -->
+        <section class="py-24 bg-white relative overflow-hidden">
+             <!-- Decorative Background -->
+             <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none"></div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 reveal">Stories of Financial Freedom</h2>
+                    <p class="text-slate-500 mt-4 reveal">Don't just take our word for it.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Review 1 -->
+                    <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-lg transition reveal">
+                        <div class="flex items-center gap-1 text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-slate-700 italic mb-6">"PayGain showed me how my insurance could actually return money to me. In 3 years, I've already received ₹2 lakhs back!"</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">RS</div>
+                            <div>
+                                <p class="font-bold text-slate-900 text-sm">Rajesh Sharma</p>
+                                <p class="text-xs text-slate-500">IT Professional</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Review 2 -->
+                    <div class="bg-pink-50 p-8 rounded-3xl border border-pink-100 hover:shadow-lg transition reveal" style="transition-delay: 0.1s;">
+                        <div class="flex items-center gap-1 text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-slate-700 italic mb-6">"Best financial decision ever. My family is protected and my wealth is growing simultaneously."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-pink-200 rounded-full flex items-center justify-center text-pink-600 font-bold">PP</div>
+                            <div>
+                                <p class="font-bold text-slate-900 text-sm">Priya Patel</p>
+                                <p class="text-xs text-slate-500">Marketing Manager</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Review 3 -->
+                    <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-lg transition reveal" style="transition-delay: 0.2s;">
+                        <div class="flex items-center gap-1 text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-slate-700 italic mb-6">"As a doctor, I needed both protection and returns. PayGain's strategy gives me both with zero hassle."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-500 font-bold">SR</div>
+                            <div>
+                                <p class="font-bold text-slate-900 text-sm">Sneha Reddy</p>
+                                <p class="text-xs text-slate-500">Doctor</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT (Simplified to fit flow) -->
+        <section class="py-24 bg-slate-50 reveal">
+            <div class="container mx-auto px-6 flex flex-col md:flex-row gap-16 items-center">
+                <div class="md:w-1/2">
+                    <div class="inline-block px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-xs font-bold tracking-wider mb-4 uppercase">Who We Are</div>
+                    <h2 class="text-4xl font-bold text-slate-900 mb-6 leading-tight">We Don't Just Sell Insurance. We Build Wealth.</h2>
+                    <p class="text-slate-600 leading-relaxed mb-6 text-lg">
+                        Traditional insurance is an expense. PayGain transforms it into an asset. We combine equity investments with innovative insurance strategies to ensure your money works harder.
+                    </p>
+                    <a href="about_us.html" class="text-pink-600 font-bold hover:text-pink-700 flex items-center gap-2 group transition">
+                        Read Our Story <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+                <div class="md:w-1/2 bg-white h-80 rounded-3xl flex items-center justify-center relative overflow-hidden group shadow-lg border border-slate-100">
+                     <img src="https://placehold.co/600x400/f1f5f9/94a3b8?text=Team+Photo" alt="Our Team" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </section>
+
+        <!-- LATEST MARKET ANNOUNCEMENTS PREVIEW -->
+        <section class="py-24 bg-slate-50 relative border-t border-slate-200">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-10">
+                    <div>
+                        <span class="text-pink-500 font-bold tracking-wider uppercase text-sm">Market News</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2">Latest NSE Announcements</h2>
+                    </div>
+                    <a href="pulse.html" class="text-pink-600 font-bold hover:text-pink-700 flex items-center gap-2 mt-4 md:mt-0 transition group">
+                        View All on PayGain Pulse <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+                
+                <div id="preview-news-container" class="space-y-4">
+                    <!-- Announcements go here -->
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm animate-pulse">
+                        <div class="h-4 bg-slate-200 rounded w-1/4 mb-4"></div>
+                        <div class="h-6 bg-slate-200 rounded w-3/4 mb-4"></div>
+                        <div class="h-4 bg-slate-200 rounded w-full"></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm animate-pulse">
+                        <div class="h-4 bg-slate-200 rounded w-1/4 mb-4"></div>
+                        <div class="h-6 bg-slate-200 rounded w-3/4 mb-4"></div>
+                        <div class="h-4 bg-slate-200 rounded w-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCT DEMONSTRATIONS -->
+        <section class="py-24 bg-white relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <span class="text-pink-500 font-bold tracking-wider uppercase text-sm">See It In Action</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2 reveal">Product Demonstrations</h2>
+                    <p class="text-slate-500 mt-4 max-w-2xl mx-auto reveal">Watch how our proprietary wealth-building strategies combine equity and insurance to maximize your long-term returns.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+                    <!-- Video Card 1 -->
+                    <div class="rounded-3xl overflow-hidden shadow-lg border border-slate-100 bg-white group hover:shadow-2xl transition duration-300 reveal">
+                        <!-- ControlsList nodownload removes the download button. oncontextmenu blocks the right click save-as. -->
+                        <div class="relative bg-slate-900 aspect-video flex items-center justify-center overflow-hidden">
+                            <video class="w-full h-full object-cover" controls controlsList="nodownload" oncontextmenu="return false;">
+                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                                Your browser does not support HTML video.
+                            </video>
+                        </div>
+                        <div class="p-8">
+                            <h3 class="font-bold text-xl text-slate-800 mb-2">Wealth Creation Overview</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">A comprehensive breakdown of how 12-15% targeted returns outpace traditional inflation and secure your financial future.</p>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 2 -->
+                    <div class="rounded-3xl overflow-hidden shadow-lg border border-slate-100 bg-white group hover:shadow-2xl transition duration-300 reveal" style="transition-delay: 0.1s;">
+                        <div class="relative bg-slate-900 aspect-video flex items-center justify-center overflow-hidden">
+                            <video class="w-full h-full object-cover" controls controlsList="nodownload" oncontextmenu="return false;">
+                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                                Your browser does not support HTML video.
+                            </video>
+                        </div>
+                        <div class="p-8">
+                            <h3 class="font-bold text-xl text-slate-800 mb-2">Child's Future Planning Matrix</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Understand the compounding mechanics needed to ensure educational goals are met exactly when required.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-24 bg-white" id="faq">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <h2 class="text-3xl font-bold text-center text-slate-900 mb-12 reveal">Frequently Asked Questions</h2>
+                <div class="space-y-4 reveal">
+                    <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                            <span class="text-lg">Why is "28,000" a critical number?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">28,000 days is the average human lifespan. Securing this timeline requires...</div>
+                    </details>
+                    <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                            <span class="text-lg">What happens if I cannot work until age 60?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Life is unpredictable. Causes like job loss or critical illness...</div>
+                    </details>
+                    <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                            <span class="text-lg">How much for my child's education?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Typically require between <strong>₹25 Lakhs to ₹1 Crore</strong>.</div>
+                    </details>
+                     <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                            <span class="text-lg">What is the "Hidden Debt Burden"?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">If income stops, EMIs do NOT. We ensure loans are covered.</div>
+                    </details>
+                     <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                            <span class="text-lg">How much wealth to retire?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Might need a corpus of over <strong>₹15 Crores</strong>.</div>
+                    </details>
+                     <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                            <span class="text-lg">PayGain's "Financial Fortress" Steps?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">4 Steps: Emergency Fund, Health Insurance, Term Insurance, Investments.</div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- DETAILED CORPORATE FOOTER -->
+        <footer class="bg-slate-900 text-white pt-20 pb-12 border-t border-slate-800 reveal">
+            <div class="container mx-auto px-6">
+                <!-- Top Links Section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 border-b border-slate-800 pb-16">
+                    <div class="lg:col-span-1">
+                        <img src="assets/images/pg_logo_no_background.png" alt="PayGain Logo" class="h-16 w-auto object-contain mb-6">
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                            Empowering Indian families to turn traditional insurance expenses into robust, wealth-building assets through proprietary equity strategies.
+                        </p>
+                        <a href="analysis_form.html" class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-3 px-6 rounded-full shadow-lg shadow-pink-500/30 transition-all duration-300 transform hover:scale-105 inline-block text-sm">
+                            Request Portfolio Analysis
+                        </a>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Quick Links</h4>
+                        <ul class="space-y-3 text-slate-400 text-sm">
+                            <li><a href="index.html" class="hover:text-pink-400 transition">Home</a></li>
+                            <li><a href="about_us.html" class="hover:text-pink-400 transition">About Us</a></li>
+                            <li><a href="career.html" class="hover:text-pink-400 transition">Careers / PayGain Advisor</a></li>
+                            <li><a href="#faq" class="hover:text-pink-400 transition">Frequently Asked Questions</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Our Services</h4>
+                        <ul class="space-y-3 text-slate-400 text-sm">
+                            <li><a href="#" class="hover:text-pink-400 transition">Wealth Creation Strategies</a></li>
+                            <li><a href="#" class="hover:text-pink-400 transition">Child's Future Planning</a></li>
+                            <li><a href="#" class="hover:text-pink-400 transition">Health Insurance Solutions</a></li>
+                            <li><a href="#" class="hover:text-pink-400 transition">General Insurance Services</a></li>
+                            <li><a href="#" class="hover:text-pink-400 transition">Term Life Protection</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Contact Details</h4>
+                        <ul class="space-y-4 text-slate-400 text-sm">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-map-marker-alt text-pink-500 mt-1 shrink-0 text-base"></i>
+                                <span class="leading-relaxed">3WS4B, 3rd Floor, West Tower, Mani Casadona, Newtown, Kolkata, WB - 700156<br><br>
+                                <strong>Registered Office:</strong> C/O Krishna Banshi Khanra, Vill+PO- Nandapur, East Midnapore, WB - 721625</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-phone-alt text-pink-500 shrink-0 text-base"></i>
+                                <span>033 4501 3342</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-envelope text-pink-500 shrink-0 text-base"></i>
+                                <span>info@paygain.net</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Comprehensive Corporate Information (MCA Standards) -->
+                <div class="mb-12">
+                     <h4 class="text-lg font-bold mb-6 text-slate-300">Corporate Information</h4>
+                     <p class="text-slate-500 text-xs leading-relaxed text-justify mb-8">
+                         <strong>PAYGAIN MULTI SERVICES PRIVATE LIMITED</strong> is a Private Limited Company, governed by the Companies Act as a company limited by shares. Classified as a Non-government company, it is registered under the Registrar of Companies <strong>RoC-Kolkata</strong>. According to the Ministry of Corporate Affairs (MCA), this company was incorporated on <strong>31-01-2024</strong>. Its Corporate Identification Number (CIN) is <strong>U70200WB2024PTC267967</strong>, and it carries the registration number <strong>267967</strong>. Currently, its eFiling status is listed as "<strong>Active</strong>".
+                     </p>
+
+                     <!-- Registration Data Grid Removed -->
+                </div>
+
+                <!-- Mini FAQ for Corporate structure Removed -->
+
+                <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between text-slate-500 text-xs gap-4">
+                    <p>&copy; 2024 PayGain Multi Services Private Limited. All rights reserved.</p>
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="hover:text-slate-300 transition">Privacy Policy</a>
+                        <span>|</span>
+                        <a href="#" class="hover:text-slate-300 transition">Terms of Service</a>
+                        <span>|</span>
+                        <a href="#" class="hover:text-slate-300 transition">Disclaimers</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MODAL: LOGIN (Unchanged) -->
+    <!-- ============================================ -->
+    <div id="loginModal" class="modal fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/80 backdrop-blur-sm p-4">
+        <div class="modal-content bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden relative border border-slate-100">
+            <button onclick="toggleModal('loginModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="p-10">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-slate-900">Welcome Back</h2>
+                    <p class="text-sm text-slate-500 mt-1">Please enter your Member ID</p>
+                </div>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="mb-5">
+                        <label class="block text-slate-700 text-sm font-bold mb-2 ml-1">Member ID</label>
+                        <input type="text" id="memberId" placeholder="e.g., EMP001 or MEM123" required class="w-full px-5 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100 transition-all bg-slate-50">
+                    </div>
+                    <div class="mb-8">
+                        <label class="block text-slate-700 text-sm font-bold mb-2 ml-1">Password</label>
+                        <input type="password" required class="w-full px-5 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100 transition-all bg-slate-50">
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">Login Securely</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT LOGIC -->
+    <!-- ============================================ -->
+    <script>
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal.classList.contains('active')) {
+                modal.classList.remove('active');
+            } else {
+                modal.classList.add('active');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const memberId = document.getElementById('memberId').value.trim().toUpperCase();
+            if (memberId.startsWith('EMP')) {
+                alert(`Welcome Employee (${memberId}). Redirecting to Employee Dashboard...`);
+            } else {
+                alert(`Welcome Member (${memberId}). Redirecting to Client Dashboard...`);
+            }
+            toggleModal('loginModal');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            reveals.forEach(reveal => observer.observe(reveal));
+        });
+    </script>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/69c78d0232b9fc1c3eedd325/1jkpntlb8';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+    <script>
+        async function fetchPreviewAnnouncements() {
+            const supabaseUrl = document.querySelector('meta[name="supabase-url"]')?.content;
+            const anonKey = document.querySelector('meta[name="supabase-anon-key"]')?.content;
+            
+            if (!supabaseUrl || supabaseUrl === 'YOUR_SUPABASE_URL') return;
+            try {
+                const res = await fetch(`${supabaseUrl}/rest/v1/market_snapshot?order=fetched_at.desc&limit=1`, {
+                    headers: { 'apikey': anonKey, 'Accept': 'application/json' }
+                });
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                if (data && data.length > 0 && data[0].announcements) {
+                    const newsData = data[0].announcements.slice(0, 3);
+                    const container = document.getElementById('preview-news-container');
+                    container.innerHTML = '';
+                    newsData.forEach(item => {
+                        const card = document.createElement('a');
+                        card.href = 'pulse.html';
+                        card.className = 'block bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition cursor-pointer hover:border-pink-300';
+                        card.innerHTML = `
+                            <div class="flex flex-col md:flex-row justify-between md:items-center gap-2 mb-2">
+                                <span class="font-bold text-pink-600 text-sm tracking-wide uppercase">${item.company}</span>
+                                <span class="text-xs text-slate-400"><i class="far fa-clock mr-1"></i>${item.timestamp}</span>
+                            </div>
+                            <h4 class="font-bold text-slate-800 text-lg mb-2">${item.headline}</h4>
+                            <p class="text-sm text-slate-500 leading-relaxed">${item.description}</p>
+                        `;
+                        container.appendChild(card);
+                    });
+                } else {
+                     document.getElementById('preview-news-container').innerHTML = '<p class="text-slate-500">No recent announcements found.</p>';
+                }
+            } catch (err) {
+                console.error("Preview fetch err:", err);
+                document.getElementById('preview-news-container').innerHTML = '<p class="text-slate-500">Failed to load live announcements.</p>';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', fetchPreviewAnnouncements);
+    </script>
+</body>
+</html>

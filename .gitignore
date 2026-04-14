@@ -1,0 +1,6 @@
+.vercel
+.env*
+node_modules/
+.DS_Store
+testNSE.js
+nse_test_out.json

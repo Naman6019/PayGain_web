@@ -123,7 +123,8 @@
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
                         <h3 class="text-slate-800 font-bold" id="nifty-trend-title">Nifty 50 Trend</h3>
                         <div class="flex bg-slate-200 p-1 rounded-lg w-fit">
-                            <button class="trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all bg-white shadow-sm text-pink-600" data-range="30d">30D</button>
+                            <button class="trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all bg-white shadow-sm text-pink-600" data-range="1d">1D</button>
+                            <button class="trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all text-slate-500 hover:text-slate-700" data-range="30d">30D</button>
                             <button class="trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all text-slate-500 hover:text-slate-700" data-range="6mo">6M</button>
                             <button class="trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all text-slate-500 hover:text-slate-700" data-range="1y">1Y</button>
                             <button class="trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all text-slate-500 hover:text-slate-700" data-range="5y">5Y</button>
@@ -434,6 +435,7 @@
             if(dataArr.length === 0) return;
 
             const labels = dataArr.map(d => {
+                if (range === '1d') return d.date; // HH:mm
                 const parts = d.date.split('-'); // YYYY-MM-DD
                 return range === '5y' ? `${parts[1]}/${parts[0].slice(2)}` : `${parts[2]}/${parts[1]}`;
             });
@@ -572,8 +574,15 @@
                     currentTrendData = data.nifty_trend;
                 }
                 
-                const defaultRange = currentTrendData['30d'] ? '30d' : Object.keys(currentTrendData)[0];
+                const defaultRange = currentTrendData['1d'] ? '1d' : (currentTrendData['30d'] ? '30d' : Object.keys(currentTrendData)[0]);
                 if(defaultRange) {
+                    document.querySelectorAll('.trend-btn').forEach(b => {
+                        if(b.getAttribute('data-range') === defaultRange) {
+                            b.className = "trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all bg-white shadow-sm text-pink-600";
+                        } else {
+                            b.className = "trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all text-slate-500 hover:text-slate-700";
+                        }
+                    });
                     renderNiftyChart(defaultRange);
                 }
             }

@@ -40,31 +40,31 @@
 
             <div class="mb-16">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                        <div class="h-64 bg-slate-200 relative"><img src="https://placehold.co/400x400/1e293b/ec4899?text=Somesh+Khanra" class="w-full h-full object-cover"></div>
+                    <div onclick="openDirectorModal(event, 'somesh')" class="group cursor-pointer bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-2xl hover:border-pink-200 hover:-translate-y-2 transition-all duration-300">
+                        <div class="h-64 bg-slate-200 relative overflow-hidden"><img src="assets/images/Somesh-sir.png" alt="Somesh Khanra" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"></div>
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-slate-900 mb-1">Mr Somesh Khanra</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mb-1 group-hover:text-pink-600 transition-colors">Mr Somesh Khanra</h3>
                             <p class="text-pink-500 font-semibold mb-3 text-xs uppercase tracking-wide">Founder and Director</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                        <div class="h-64 bg-slate-200 relative"><img src="https://placehold.co/400x400/1e293b/ec4899?text=Amit+Kumar+Das" class="w-full h-full object-cover"></div>
+                    <div onclick="openDirectorModal(event, 'amit')" class="group cursor-pointer bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-2xl hover:border-pink-200 hover:-translate-y-2 transition-all duration-300">
+                        <div class="h-64 bg-slate-200 relative overflow-hidden"><img src="assets/images/Amit-sir.png" alt="Amit Kumar Das" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"></div>
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-slate-900 mb-1">Lt Col Amit Kumar Das (Retd)</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mb-1 group-hover:text-pink-600 transition-colors">Lt Col Amit Kumar Das (Retd)</h3>
                             <p class="text-pink-500 font-semibold mb-3 text-xs uppercase tracking-wide">Co-founder and Director</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                        <div class="h-64 bg-slate-200 relative"><img src="https://placehold.co/400x400/1e293b/ec4899?text=O.P.+Vaishnav" class="w-full h-full object-cover"></div>
+                    <div onclick="openDirectorModal(event, 'vaishnav')" class="group cursor-pointer bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-2xl hover:border-pink-200 hover:-translate-y-2 transition-all duration-300">
+                        <div class="h-64 bg-slate-200 relative overflow-hidden"><img src="assets/images/Vaishnave%20sir.jpeg" alt="O.P. Vaishnav" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"></div>
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-slate-900 mb-1">Maj Gen O P Vaishnav (Retd) SM, VSM</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mb-1 group-hover:text-pink-600 transition-colors">Maj Gen O P Vaishnav (Retd) SM, VSM</h3>
                             <p class="text-pink-500 font-semibold mb-3 text-xs uppercase tracking-wide">Independent Director</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                        <div class="h-64 bg-slate-200 relative"><img src="https://placehold.co/400x400/1e293b/ec4899?text=Rafiqul+Islam+Mullick" class="w-full h-full object-cover"></div>
+                    <div onclick="openDirectorModal(event, 'mullick')" class="group cursor-pointer bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-2xl hover:border-pink-200 hover:-translate-y-2 transition-all duration-300">
+                        <div class="h-64 bg-slate-200 relative overflow-hidden"><img src="assets/images/Mullick-sir.png" alt="Rafiqul Islam Mullick" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"></div>
                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-slate-900 mb-1">Col Rafiqul Islam Mullick (Retd)</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mb-1 group-hover:text-pink-600 transition-colors">Col Rafiqul Islam Mullick (Retd)</h3>
                             <p class="text-pink-500 font-semibold mb-3 text-xs uppercase tracking-wide">VP HR and Strategic Communications</p>
                         </div>
                     </div>
@@ -148,6 +148,138 @@
             </div>
         </div>
     </footer>
+    <!-- DIRECTOR MODAL & LOGIC -->
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+    
+    <div id="directorModal" class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-sm bg-slate-900/70 p-4">
+        <div id="directorModalContent" class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden relative flex flex-col md:flex-row" style="transform: scale(0); opacity: 0;">
+            <!-- Close Button -->
+            <button onclick="closeDirectorModal()" class="absolute top-4 right-4 z-20 bg-slate-900/10 hover:bg-rose-500 hover:text-white text-slate-600 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-200 shadow-sm">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="md:w-2/5 h-48 md:h-auto bg-slate-200 relative hidden sm:block overflow-hidden">
+                <img id="modalImg" src="" class="w-full h-full object-cover object-top" alt="Director">
+            </div>
+            
+            <div class="p-8 md:w-3/5 flex flex-col justify-center">
+                <h3 id="modalName" class="text-2xl font-bold text-slate-900 mb-1">Name</h3>
+                <p id="modalRole" class="text-pink-500 font-bold mb-6 text-[10px] uppercase tracking-widest leading-relaxed">Role</p>
+                
+                <div class="space-y-5 text-slate-600 text-sm leading-relaxed overflow-y-auto max-h-64 pr-2 custom-scrollbar">
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-1"><i class="fas fa-briefcase text-slate-400 mr-2"></i> Past Experience</h4>
+                        <p id="modalExp" class="text-slate-500">Placeholder</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-1"><i class="fas fa-eye text-pink-400 mr-2"></i> Vision for PayGain</h4>
+                        <p id="modalVision" class="text-slate-500">Placeholder</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const directors = {
+            somesh: {
+                name: 'Mr Somesh Khanra',
+                role: 'Founder and Director',
+                img: 'assets/images/Somesh-sir.png',
+                exp: 'With extensive experience in the financial sector, Mr. Khanra has spent over a decade analyzing market trends and developing robust wealth creation strategies, successfully mentoring countless retail investors.',
+                vision: 'To empower every Indian family to build intergenerational wealth by seamlessly transforming traditional insurance paradigms into active, growth-oriented equity investments.'
+            },
+            amit: {
+                name: 'Lt Col Amit Kumar Das (Retd)',
+                role: 'Co-founder and Director',
+                img: 'assets/images/Amit-sir.png',
+                exp: 'A distinguished veteran of the Indian Armed Forces, Amit brings unparalleled operational discipline and strategic resource management to the corporate sector following years of commissioned service.',
+                vision: 'To build PayGain into an institution of absolute trust and absolute integrity, scaling operations across India while maintaining the highest standard of financial ethics.'
+            },
+            vaishnav: {
+                name: 'Maj Gen O P Vaishnav (Retd) SM, VSM',
+                role: 'Independent Director',
+                img: 'assets/images/Vaishnave%20sir.jpeg',
+                exp: 'Decorated with the Sena Medal and Vishisht Seva Medal, Gen Vaishnav offers decades of high-level administrative excellence, conflict management, and visionary leadership at elite national levels.',
+                vision: 'To guide PayGain\'s corporate governance trajectory, ensuring rigid regulatory compliance and fostering a culture of profound fiduciary responsibility to our clients.'
+            },
+            mullick: {
+                name: 'Col Rafiqul Islam Mullick (Retd)',
+                role: 'VP HR and Strategic Communications',
+                img: 'assets/images/Mullick-sir.png',
+                exp: 'A highly experienced HR expert and former commanding officer, Col Mullick has managed large-scale personnel deployments, intricate crisis communications, and extensive institutional training.',
+                vision: 'To cultivate a dynamic, transparent, and performance-driven workplace culture that vigorously attracts top-tier financial talent to serve PayGain\'s growing user base.'
+            }
+        };
+
+        let lastOriginX = 0;
+        let lastOriginY = 0;
+
+        function openDirectorModal(e, id) {
+            const d = directors[id];
+            if(!d) return;
+            
+            document.getElementById('modalName').textContent = d.name;
+            document.getElementById('modalRole').textContent = d.role;
+            document.getElementById('modalImg').src = d.img;
+            document.getElementById('modalExp').textContent = d.exp;
+            document.getElementById('modalVision').textContent = d.vision;
+            
+            const modal = document.getElementById('directorModal');
+            const content = document.getElementById('directorModalContent');
+            
+            // Calculate screen center
+            const screenCenterX = window.innerWidth / 2;
+            const screenCenterY = window.innerHeight / 2;
+            
+            // Calculate clicked card center
+            const cardRect = e.currentTarget.getBoundingClientRect();
+            const cardCenterX = cardRect.left + cardRect.width / 2;
+            const cardCenterY = cardRect.top + cardRect.height / 2;
+            
+            // Vector calculation from card to center
+            lastOriginX = cardCenterX - screenCenterX;
+            lastOriginY = cardCenterY - screenCenterY;
+
+            // Instantly move content to the card location, scaled down
+            content.classList.remove('transition-all', 'duration-500', 'ease-out');
+            content.style.transform = `translate(${lastOriginX}px, ${lastOriginY}px) scale(0)`;
+            content.style.opacity = '0';
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            
+            // Force redraw to apply the instant jump before animating
+            void content.offsetWidth;
+            
+            // Add transitions back and animate to center 
+            content.classList.add('transition-all', 'duration-500', 'ease-out');
+            content.style.transform = `translate(0px, 0px) scale(1)`;
+            content.style.opacity = '1';
+        }
+
+        function closeDirectorModal() {
+            const modal = document.getElementById('directorModal');
+            const content = document.getElementById('directorModalContent');
+            
+            // Animate it back to the exact physical position of the original card!
+            content.style.transform = `translate(${lastOriginX}px, ${lastOriginY}px) scale(0)`;
+            content.style.opacity = '0';
+            
+            setTimeout(() => {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+            }, 500); // Wait for transition duration
+        }
+
+        document.getElementById('directorModal').addEventListener('click', (e) => {
+            if(e.target.id === 'directorModal') closeDirectorModal();
+        });
+    </script>
+
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

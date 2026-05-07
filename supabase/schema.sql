@@ -27,5 +27,6 @@ CREATE TABLE IF NOT EXISTS analysis_requests (
     mobile_number TEXT NOT NULL,
     email_address TEXT NOT NULL,
     city TEXT NOT NULL,
-    interested_product TEXT NOT NULL
+    interested_product TEXT NOT NULL,
+    details JSONB
 );

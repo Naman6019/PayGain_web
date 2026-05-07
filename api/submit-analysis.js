@@ -6,10 +6,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { fullName, mobileNumber, emailAddress, city, interestedProduct } = req.body;
+    const { fullName, mobileNumber, emailAddress, city, interestedProduct, ...details } = req.body;
 
-    if (!fullName || !mobileNumber || !emailAddress || !city || !interestedProduct) {
-      return res.status(400).json({ error: 'All fields are required.' });
+    if (!fullName || !mobileNumber || !city || !interestedProduct) {
+      return res.status(400).json({ error: 'Required fields are missing.' });
     }
 
     const { data, error } = await supabase
@@ -18,9 +18,10 @@ export default async function handler(req, res) {
         {
           full_name: fullName,
           mobile_number: mobileNumber,
-          email_address: emailAddress,
+          email_address: emailAddress || '',
           city: city,
-          interested_product: interestedProduct
+          interested_product: interestedProduct,
+          details: details
         }
       ]);
 

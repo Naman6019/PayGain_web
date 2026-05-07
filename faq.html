@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayGain FAQs | Insurance Planning, Renewal Support & Financial Solutions</title>
+    <meta name="description" content="Find simple answers to common questions about PayGain, insurance planning, renewal support, policy benefits, premiums, and customer process.">
+    <link rel="icon" type="image/png" href="assets/images/Logo.png">
+    <!-- Tailwind CSS for Professional Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* UPDATED BRAND COLORS (Vibrant Pink) */
+        :root {
+            --primary-blue: #0f172a; 
+            --accent-pink: #ec4899;  
+            --pink-hover: #db2777;   
+            --text-grey: #475569;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FAQ Styling */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
+        @keyframes sweep {
+            0%    {opacity: 0; transform: translateY(-10px)}
+            100%  {opacity: 1; transform: translateY(0)}
+        }
+        details[open] .fa-chevron-down { transform: rotate(180deg); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- HEADER -->
+    <header class="w-full bg-slate-900 shadow-lg py-4 border-b border-slate-800 sticky top-0 z-50">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center text-decoration-none">
+                <img src="assets/images/pg_logo_no_background.png" alt="PayGain Logo" class="h-10 w-auto object-contain">
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-slate-300 hover:text-pink-400 font-semibold transition">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Home
+                </a>
+                <a href="pulse.html" class="text-slate-300 hover:text-pink-400 font-semibold transition text-sm md:text-base">
+                    PayGain Pulse
+                </a>
+                <a href="analysis_form.html" class="hidden md:block bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-semibold py-2 px-5 rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-sm">
+                    Get Analysis
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container mx-auto px-6 py-16 flex-1 flex flex-col justify-center">
+        <!-- FAQ -->
+        <section class="py-12 bg-white rounded-3xl shadow-sm border border-slate-100" id="faq">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h1 class="text-4xl md:text-5xl font-bold text-center text-slate-900 mb-6 reveal active">Frequently Asked Questions</h1>
+                <p class="text-slate-500 text-center mb-8 text-lg reveal active">Simple answers to common questions about PayGain, insurance planning, renewal support, policy benefits, and the customer process.</p>
+                <p class="text-slate-600 mb-12 text-center max-w-3xl mx-auto reveal active leading-relaxed">At PayGain, we understand that financial planning can feel confusing, especially when it involves insurance, premiums, long-term benefits, and renewal support. This FAQ page answers common questions in simple language so you can make a more informed decision before starting your financial planning journey.</p>
+                
+                <!-- Section 1: About PayGain -->
+                <div class="mb-12 reveal active">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b border-slate-200 pb-2">Section 1: About PayGain</h2>
+                    <div class="space-y-4">
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What is PayGain?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain Multi Services Pvt. Ltd. is a financial services company that helps customers plan for financial stability, family protection, passive income, and long-term wealth creation through insurance and related financial solutions.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What does PayGain help customers with?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain helps customers understand and choose financial solutions for life insurance, health insurance, motor insurance, marine insurance, and other financial products.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Who is PayGain mainly for?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain is suitable for Indian families, salaried people, business owners, parents, and individuals who want to plan for child education, retirement, medical emergencies, regular income, and family security.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What is PayGain’s main goal?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain’s goal is to help common citizens of India move towards a financially stable and comfortable life by offering practical financial planning options.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Is PayGain an insurance company?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain works as a financial service provider and presents insurance-related solutions through trusted insurance partners. The insurance policy is issued by the respective insurer.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Which companies are PayGain’s partners?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain works with insurance partners shown in its brochure, including Bajaj Life, Niva Bupa Health Insurance, and Tata AIG Insurance.</div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Section 2: Services and Products -->
+                <div class="mb-12 reveal active">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b border-slate-200 pb-2">Section 2: Services and Products</h2>
+                    <div class="space-y-4">
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What services does PayGain offer?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain offers support and guidance for life insurance, health insurance, motor insurance, marine insurance, and preference share-related opportunities.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Does PayGain provide life insurance plans?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain helps customers understand life insurance strategies through partner insurance providers. These plans may include life coverage, yearly payouts, tax benefits, and future wealth creation depending on the chosen policy.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Does PayGain provide health insurance?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Yes, health insurance is one of the services PayGain offers.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Does PayGain provide motor insurance?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Yes, motor insurance is one of the services PayGain offers.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Can PayGain help me plan for my child’s future?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Yes. PayGain’s planning approach can help customers explore options for securing their child’s education and future needs.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Can PayGain help me build a retirement corpus?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Yes. PayGain helps customers explore long-term planning options for retirement income and financial security.</div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Section 3: Life Insurance and Policy Benefits -->
+                <div class="mb-12 reveal active">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b border-slate-200 pb-2">Section 3: Life Insurance and Policy Benefits</h2>
+                    <div class="space-y-4">
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What is PayGain’s life insurance strategy?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain’s life insurance strategy is designed to help customers create passive income, maintain life coverage, and plan for future wealth through insurance-based financial planning.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What are the main benefits of the policy shown in the brochure?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">The brochure lists benefits such as tax benefit, life coverage, premium waiver benefit, death benefit during the policy term, guaranteed yearly payout, and future wealth creation.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What does premium waiver benefit mean?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Premium waiver benefit generally means that in certain situations, future premiums may be waived as per the policy terms. The exact conditions depend on the selected policy and insurer rules.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What is death benefit?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Death benefit means the amount payable to the nominee if the insured person passes away during the policy term, subject to the terms and conditions of the policy.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What is guaranteed yearly payout?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Guaranteed yearly payout means a fixed yearly amount that may be paid as per the policy illustration and policy terms.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Are the returns tax-free?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Some plan illustrations mention tax-free benefits. However, tax treatment depends on current tax laws, policy type, customer profile, and applicable government rules. Customers should consult a tax advisor or PayGain representative.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Are the benefits guaranteed?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Some benefits may be guaranteed as per the selected policy illustration. Customers should check the official policy document and benefit illustration before purchasing.</div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Section 4: Renewal Support -->
+                <div class="mb-12 reveal active">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b border-slate-200 pb-2">Section 4: Renewal Support</h2>
+                    <div class="space-y-4">
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What is PayGain Renewal Support?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain Renewal Support is a support structure where PayGain may help customers with selected renewal premiums based on the selected plan, eligibility, and applicable terms.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">How does the 12 premium and 6 premium support system work?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">In one plan example, the customer has a 12-year premium-paying term. PayGain supports 6 premiums, which may reduce the customer’s effective burden.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Does this mean I only pay 6 out of 12 premiums?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">The brochure states that by choosing the maximum benefit, the customer needs to pay only 6 premiums out of 12 premiums. However, customers should confirm eligibility, support terms, and conditions directly with PayGain.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">How much renewal support can PayGain provide?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">In the example shown, PayGain Renewal Support can go up to ₹12,00,000.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Is PayGain Renewal Support guaranteed?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Renewal support is presented as part of PayGain’s plan structure. Customers should confirm the exact terms, eligibility, documentation, and conditions directly with PayGain before making a decision.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Why does PayGain offer Renewal Support?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain offers Renewal Support to help customers continue their policy and reduce the pressure of future premium payments, subject to applicable terms and eligibility.</div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Section 5: Cost, Premiums, and Returns -->
+                <div class="mb-12 reveal active">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b border-slate-200 pb-2">Section 5: Cost, Premiums, and Returns</h2>
+                    <div class="space-y-4">
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">How much do I need to invest?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain presents different plan slabs. Examples include annual premium options like ₹1 lakh, ₹2 lakh, ₹3 lakh, ₹4 lakh, and ₹5 lakh, depending on the customer’s financial capacity and goals.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">In the ₹2 lakh premium example, how much does the customer pay?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">The example shows a customer paying ₹2,00,000 annually for 12 years, making the total premium ₹24,00,000.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What is the actual cost after support in the example?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">In one example, the brochure shows total premium of ₹24,00,000, moneyback from Bajaj of ₹11,00,000, PayGain Renewal Support of ₹12,00,000, and actual cost of ₹1,00,000. This is based on the illustration and should be verified with official documents.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What does “You Gain ₹57L+” mean?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">This refers to the illustrated benefit shown in the brochure. Customers should check the official benefit illustration and policy documents before purchasing.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Can I choose a plan based on my budget?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Yes. PayGain presents different premium slabs so customers can explore options based on their budget, income, and financial goals.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Can I stop the plan midway?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">This depends on the selected insurance policy. Stopping midway may affect benefits, returns, and support. Customers should check surrender terms and policy conditions before buying.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What happens if I miss a premium?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">This depends on the policy rules. Some policies may have a grace period, while others may lapse if premiums are not paid. Customers should check the insurer’s policy terms.</div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Section 6: Customer Safety and Process -->
+                <div class="mb-12 reveal active">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b border-slate-200 pb-2">Section 6: Customer Safety and Process</h2>
+                    <div class="space-y-4">
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Is my money safe with PayGain?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain positions itself as a trusted and ethical financial partner. However, customers should always review official policy documents, insurer details, payment process, receipts, and terms before making payments.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Who issues the insurance policy?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Insurance policies are issued by the respective insurance companies. PayGain assists with planning, service, and support.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Should I pay directly to PayGain or the insurance company?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Customers should confirm the correct payment process directly with PayGain. For insurance products, payments should be made only through official and traceable channels, with proper receipts.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">Will I get official policy documents?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Yes. For any insurance policy, customers should receive official policy documents from the insurer. Customers should read and save these documents carefully.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What should I check before buying?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Customers should check the premium amount, premium-paying term, policy term, life cover, guaranteed and non-guaranteed benefits, renewal support terms, surrender value, maturity benefit, death benefit, tax rules, exclusions, and conditions.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">How do I start with PayGain?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Customers can contact PayGain through phone or email, discuss their financial goals, understand suitable options, and review the plan details before making a decision.</div>
+                        </details>
+                        <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                            <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
+                                <span class="text-lg">What documents are usually needed?</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                            </summary>
+                            <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Common documents may include PAN card, Aadhaar card, photograph or selfie, signature, income details, occupation details, nominee details, mobile number, and email ID.</div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="mt-12 p-6 bg-slate-100 rounded-xl text-sm text-slate-500 leading-relaxed reveal active">
+                    <strong>Disclaimer:</strong> The information provided is for general awareness and educational purposes only. Product features, benefits, returns, renewal support, tax treatment, and policy conditions may vary based on the selected plan, insurer rules, eligibility, applicable laws, and PayGain’s terms and conditions. Customers should read all policy documents, benefit illustrations, terms, conditions, exclusions, and risk factors carefully before making any financial decision.
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- DETAILED CORPORATE FOOTER -->
+    <footer class="bg-slate-900 text-white pt-20 pb-12 border-t border-slate-800 mt-auto">
+        <div class="container mx-auto px-6">
+            <!-- Top Links Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 border-b border-slate-800 pb-16">
+                <div class="lg:col-span-1">
+                    <img src="assets/images/pg_logo_no_background.png" alt="PayGain Logo" class="h-16 w-auto object-contain mb-6">
+                    <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                        Empowering Indian families to turn traditional insurance expenses into robust, wealth-building assets through proprietary equity strategies.
+                    </p>
+                    <a href="analysis_form.html" class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-3 px-6 rounded-full shadow-lg shadow-pink-500/30 transition-all duration-300 transform hover:scale-105 inline-block text-sm">
+                        Get Free Analysis
+                    </a>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Quick Links</h4>
+                    <ul class="space-y-3 text-slate-400 text-sm">
+                        <li><a href="index.html" class="hover:text-pink-400 transition">Home</a></li>
+                        <li><a href="about_us.html" class="hover:text-pink-400 transition">About Us</a></li>
+                        <li><a href="career.html" class="hover:text-pink-400 transition">Careers / PayGain Advisor</a></li>
+                        <li><a href="faq.html" class="hover:text-pink-400 transition">Frequently Asked Questions</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Our Services</h4>
+                    <ul class="space-y-3 text-slate-400 text-sm">
+                        <li><a href="#" class="hover:text-pink-400 transition">Wealth Creation Strategies</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition">Child's Future Planning</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition">Health Insurance Solutions</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition">Stock Market Services</a></li>
+                        <li><a href="#" class="hover:text-pink-400 transition">Term Life Protection</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Contact Details</h4>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt text-pink-500 mt-1 shrink-0 text-base"></i>
+                            <span class="leading-relaxed">3WS4B, 3rd Floor, West Tower, Mani Casadona, Newtown, Kolkata, WB - 700156<br><br>
+                            <strong>Registered Office:</strong> C/O Krishna Banshi Khanra, Vill+PO- Nandapur, East Midnapore, WB - 721625</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-pink-500 shrink-0 text-base"></i>
+                            <span>033 4501 3342</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-pink-500 shrink-0 text-base"></i>
+                            <span>info@paygain.net</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Comprehensive Corporate Information (MCA Standards) -->
+            <div class="mb-12">
+                 <h4 class="text-lg font-bold mb-6 text-slate-300">Corporate Information</h4>
+                 <p class="text-slate-500 text-xs leading-relaxed text-justify mb-8">
+                     <strong>PAYGAIN MULTI SERVICES PRIVATE LIMITED</strong> is a Private Limited Company, governed by the Companies Act as a company limited by shares. Classified as a Non-government company, it is registered under the Registrar of Companies <strong>RoC-Kolkata</strong>. According to the Ministry of Corporate Affairs (MCA), this company was incorporated on <strong>31-01-2024</strong>. Its Corporate Identification Number (CIN) is <strong>U70200WB2024PTC267967</strong>, and it carries the registration number <strong>267967</strong>. Currently, its eFiling status is listed as "<strong>Active</strong>".
+                 </p>
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between text-slate-500 text-xs gap-4">
+                <p>&copy; 2024 PayGain Multi Services Private Limited. All rights reserved.</p>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="hover:text-slate-300 transition">Privacy Policy</a>
+                    <span>|</span>
+                    <a href="#" class="hover:text-slate-300 transition">Terms of Service</a>
+                    <span>|</span>
+                    <a href="#" class="hover:text-slate-300 transition">Disclaimers</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/69c78d0232b9fc1c3eedd325/1jkpntlb8';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            reveals.forEach(reveal => observer.observe(reveal));
+        });
+    </script>
+</body>
+</html>

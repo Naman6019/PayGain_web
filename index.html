@@ -58,16 +58,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* FAQ Styling */
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
-        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
-        @keyframes sweep {
-            0%    {opacity: 0; transform: translateY(-10px)}
-            100%  {opacity: 1; transform: translateY(0)}
-        }
-        details[open] .fa-chevron-down { transform: rotate(180deg); }
-
         /* Marquee Animation for Logos */
         @keyframes marquee {
             0% { transform: translateX(0); }
@@ -522,56 +512,80 @@
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
         </section>
 
-        <!-- FAQ -->
-        <section class="py-24 bg-white" id="faq">
-            <div class="container mx-auto px-6 max-w-3xl">
-                <h2 class="text-3xl font-bold text-center text-slate-900 mb-12 reveal">Frequently Asked Questions</h2>
+        <!-- FAQ PREVIEW -->
+        <section class="py-24 bg-slate-50 relative border-t border-slate-200">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-16">
+                    <span class="text-pink-500 font-bold tracking-wider uppercase text-sm">Quick Answers</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2 reveal">Frequently Asked Questions</h2>
+                    <p class="text-slate-500 mt-4 reveal">Essential answers about our strategies, planning process, and security.</p>
+                </div>
+                
                 <div class="space-y-4 reveal">
-                    <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
-                            <span class="text-lg">Why is "28,000" a critical number?</span>
-                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">What is PayGain?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
                         </summary>
-                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">28,000 days is the average human lifespan. Securing this timeline requires...</div>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain Multi Services Pvt. Ltd. is a financial services company that helps customers plan for financial stability, family protection, passive income, and long-term wealth creation through insurance and related financial solutions.</div>
                     </details>
-                    <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
-                            <span class="text-lg">What happens if I cannot work until age 60?</span>
-                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                    
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">What services does PayGain offer?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
                         </summary>
-                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Life is unpredictable. Causes like job loss or critical illness...</div>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain offers support and guidance for life insurance, health insurance, motor insurance, marine insurance, and preference share-related opportunities.</div>
                     </details>
-                    <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
-                            <span class="text-lg">How much for my child's education?</span>
-                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                    
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">How much do I need to invest?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
                         </summary>
-                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Typically require between <strong>₹25 Lakhs to ₹1 Crore</strong>.</div>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain presents different plan slabs. Examples include annual premium options like ₹1 lakh, ₹2 lakh, ₹3 lakh, ₹4 lakh, and ₹5 lakh, depending on the customer’s financial capacity and goals.</div>
                     </details>
-                     <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
-                            <span class="text-lg">What is the "Hidden Debt Burden"?</span>
-                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                    
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">What is PayGain Renewal Support?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
                         </summary>
-                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">If income stops, EMIs do NOT. We ensure loans are covered.</div>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain Renewal Support is a support structure where PayGain may help customers with selected renewal premiums based on the selected plan, eligibility, and applicable terms.</div>
                     </details>
-                     <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
-                            <span class="text-lg">How much wealth to retire?</span>
-                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                    
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">Are the returns tax-free?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
                         </summary>
-                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Might need a corpus of over <strong>₹15 Crores</strong>.</div>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Some plan illustrations mention tax-free benefits. However, tax treatment depends on current tax laws, policy type, customer profile, and applicable government rules. Customers should consult a tax advisor.</div>
                     </details>
-                     <details class="group bg-slate-50 rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition bg-slate-50 hover:bg-white">
-                            <span class="text-lg">PayGain's "Financial Fortress" Steps?</span>
-                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-white group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                    
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">Is my money safe with PayGain?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
                         </summary>
-                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">4 Steps: Emergency Fund, Health Insurance, Term Insurance, Investments.</div>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain positions itself as a trusted and ethical financial partner. However, customers should always review official policy documents, insurer details, payment process, receipts, and terms before making payments.</div>
                     </details>
+                </div>
+                
+                <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 reveal">
+                    <a href="faq.html" class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-pink-500/30 transition-all hover:-translate-y-1 w-full sm:w-auto text-center">
+                        View All FAQs
+                    </a>
+                    <a href="mailto:info@paygain.net" class="bg-white border-2 border-slate-200 hover:border-pink-500 text-slate-700 hover:text-pink-600 font-bold py-3 px-8 rounded-full transition-all hover:-translate-y-1 w-full sm:w-auto text-center">
+                        Contact Us
+                    </a>
+                </div>
+                
+                <div class="mt-12 p-6 bg-slate-100/50 rounded-xl text-xs text-slate-500 leading-relaxed reveal text-center">
+                    <strong>Disclaimer:</strong> The information provided is for general awareness. Product features, benefits, and returns may vary based on the selected plan, insurer rules, and eligibility. Read all policy documents carefully.
                 </div>
             </div>
         </section>
@@ -597,7 +611,7 @@
                             <li><a href="index.html" class="hover:text-pink-400 transition">Home</a></li>
                             <li><a href="about_us.html" class="hover:text-pink-400 transition">About Us</a></li>
                             <li><a href="career.html" class="hover:text-pink-400 transition">Careers / PayGain Advisor</a></li>
-                            <li><a href="#faq" class="hover:text-pink-400 transition">Frequently Asked Questions</a></li>
+                            <li><a href="faq.html" class="hover:text-pink-400 transition">Frequently Asked Questions</a></li>
                         </ul>
                     </div>
 

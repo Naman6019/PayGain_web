@@ -38,26 +38,26 @@
                 <form onsubmit="handleAnalysisSubmit(event)">
                     <div class="mb-6">
                         <label class="block text-slate-700 text-sm font-bold mb-2 ml-1 uppercase tracking-wide">Full Name</label>
-                        <input type="text" required placeholder="Enter your full name" class="w-full px-5 py-4 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition bg-slate-50">
+                        <input type="text" id="fullName" required placeholder="Enter your full name" class="w-full px-5 py-4 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition bg-slate-50">
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
                             <label class="block text-slate-700 text-sm font-bold mb-2 ml-1 uppercase tracking-wide">Mobile Number</label>
-                            <input type="tel" required placeholder="+91 XXXXX XXXXX" class="w-full px-5 py-4 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition bg-slate-50">
+                            <input type="tel" id="mobileNumber" required placeholder="+91 XXXXX XXXXX" class="w-full px-5 py-4 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition bg-slate-50">
                         </div>
                         <div>
                             <label class="block text-slate-700 text-sm font-bold mb-2 ml-1 uppercase tracking-wide">Email Address</label>
-                            <input type="email" required placeholder="you@example.com" class="w-full px-5 py-4 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition bg-slate-50">
+                            <input type="email" id="emailAddress" required placeholder="you@example.com" class="w-full px-5 py-4 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition bg-slate-50">
                         </div>
                     </div>
                     <div class="mb-6">
                         <label class="block text-slate-700 text-sm font-bold mb-2 ml-1 uppercase tracking-wide">City</label>
-                        <input type="text" required placeholder="e.g. Kolkata, Mumbai" class="w-full px-5 py-4 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition bg-slate-50">
+                        <input type="text" id="city" required placeholder="e.g. Kolkata, Mumbai" class="w-full px-5 py-4 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 transition bg-slate-50">
                     </div>
                     <div class="mb-10">
                         <label class="block text-slate-700 text-sm font-bold mb-2 ml-1 uppercase tracking-wide">Interested Product</label>
                         <div class="relative">
-                            <select class="w-full px-5 py-4 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 bg-slate-50 appearance-none transition cursor-pointer">
+                            <select id="interestedProduct" required class="w-full px-5 py-4 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/10 bg-slate-50 appearance-none transition cursor-pointer">
                                 <option value="" disabled selected>Select a product...</option>
                                 <option>Wealth Creation Plan</option>
                                 <option>Child's Future Planning</option>
@@ -67,7 +67,7 @@
                             <div class="absolute inset-y-0 right-0 flex items-center px-5 pointer-events-none text-slate-500"><i class="fas fa-chevron-down"></i></div>
                         </div>
                     </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 rounded-xl shadow-xl shadow-pink-500/30 transition-all transform hover:-translate-y-1 hover:shadow-2xl text-lg">
+                    <button type="submit" id="submitButton" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 rounded-xl shadow-xl shadow-pink-500/30 transition-all transform hover:-translate-y-1 hover:shadow-2xl text-lg flex items-center justify-center gap-2">
                         Request Free Analysis
                     </button>
                 </form>
@@ -76,10 +76,49 @@
     </div>
 
     <script>
-        function handleAnalysisSubmit(e) {
+        async function handleAnalysisSubmit(e) {
             e.preventDefault();
-            alert("Thank you! Your details have been submitted.");
-            window.location.href = 'index.html'; // Redirect to home page
+            
+            const submitBtn = document.getElementById('submitButton');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Submitting...</span>';
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                mobileNumber: document.getElementById('mobileNumber').value,
+                emailAddress: document.getElementById('emailAddress').value,
+                city: document.getElementById('city').value,
+                interestedProduct: document.getElementById('interestedProduct').value
+            };
+
+            try {
+                const response = await fetch('/api/submit-analysis', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert("Thank you! Your details have been submitted successfully.");
+                    window.location.href = 'index.html'; // Redirect to home page
+                } else {
+                    alert("Error: " + (result.error || "Failed to submit. Please try again."));
+                }
+            } catch (error) {
+                console.error("Submission error:", error);
+                alert("An error occurred while submitting. Please try again later.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
         }
     </script>
     <!-- DETAILED CORPORATE FOOTER -->

@@ -1,0 +1,628 @@
+import os
+
+html_content = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayGain - Financial Services</title>
+    <link rel="icon" type="image/png" href="assets/images/Logo.png">
+    <!-- Tailwind CSS for Professional Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* UPDATED BRAND COLORS (Vibrant Pink & Navy) */
+        :root {
+            --primary-blue: #0f172a; 
+            --accent-pink: #ec4899;  
+            --pink-hover: #db2777;   
+            --text-grey: #475569;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* View Transition Animation */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Blob Backgrounds */
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.4;
+        }
+        
+        /* Tawk.to Badge Hiding */
+        .tawk-badge-container { display: none !important; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div id="landingPage" class="fade-in">
+        
+        <!-- HEADER -->
+        <header class="fixed w-full top-0 z-50 transition-all duration-300 bg-slate-900 shadow-lg border-b border-slate-800">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 group cursor-pointer" onclick="window.location.href='index.html'">
+                    <img src="assets/images/pg_logo_no_background.png" alt="PayGain Logo" class="h-14 w-auto object-contain group-hover:opacity-90 transition">
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4 md:gap-6">
+                    <a href="about_us.html" class="hidden md:block text-slate-300 hover:text-pink-400 font-semibold transition">
+                        About Us
+                    </a>
+                    <a href="faq.html" class="hidden md:block text-slate-300 hover:text-pink-400 font-semibold transition">
+                        FAQs
+                    </a>
+                    <a href="#contact" class="hidden md:block text-slate-300 hover:text-pink-400 font-semibold transition">
+                        Contact
+                    </a>
+                    <a href="pulse.html" class="text-slate-300 hover:text-pink-400 font-semibold transition text-sm md:text-base">
+                        PayGain Pulse
+                    </a>
+                    <a href="#contact" class="hidden sm:block bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-semibold py-2.5 px-6 rounded-full shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 hover:-translate-y-0.5 transition-all duration-300">
+                        Book Consultation
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="h-20"></div>
+
+        <!-- HERO SECTION -->
+        <section class="relative bg-slate-900 text-white pt-24 pb-32 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900"></div>
+            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+            <div class="blob bg-pink-600 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="blob bg-blue-600 w-96 h-96 rounded-full bottom-0 right-0 translate-x-1/2 translate-y-1/2"></div>
+
+            <div class="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight leading-tight reveal active">
+                        Plan Today. <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-300">Secure Tomorrow.</span><br>
+                        Live Worry-Free Forever.
+                    </h1>
+                    <h2 class="text-xl md:text-2xl text-pink-300 mb-6 font-semibold reveal active" style="transition-delay: 0.1s;">Smart financial solutions for every stage of your life.</h2>
+                    <p class="text-lg md:text-xl text-slate-300 mb-10 leading-relaxed max-w-lg mx-auto md:mx-0 reveal active" style="transition-delay: 0.2s;">
+                        PayGain helps Indian families and business owners explore protection-first financial planning solutions for life coverage, health protection, motor insurance, child future planning, retirement security, regular income possibilities, and long-term financial security.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start reveal active" style="transition-delay: 0.3s;">
+                        <a href="#contact" class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 px-8 rounded-full shadow-xl shadow-pink-500/40 hover:-translate-y-1 transition-all inline-block text-center">
+                            Book Free Consultation
+                        </a>
+                        <a href="https://wa.me/910000000000" class="flex items-center justify-center gap-2 text-white font-semibold py-4 px-8 rounded-full border border-slate-600 hover:bg-white/10 transition-all text-center">
+                            <i class="fab fa-whatsapp text-green-400 text-xl"></i> Talk on WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="md:w-1/2 reveal active mt-12 md:mt-0" style="transition-delay: 0.4s;">
+                    <div class="relative">
+                        <img src="assets/images/indian-couple-happy_v2.png" alt="Family Security" class="rounded-3xl shadow-2xl border border-slate-700 w-full animate-float object-cover">
+                        <div class="absolute -top-6 -right-2 md:-right-6 bg-white p-4 rounded-xl shadow-lg flex items-center gap-3 animate-float" style="animation-delay: 1s; animation-duration: 7s;">
+                            <div class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600"><i class="fas fa-shield-alt"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-500 font-bold">Status</p>
+                                <p class="text-slate-900 font-bold">Protected</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRUST STATS -->
+        <section class="bg-slate-900 border-t border-slate-800 py-10 relative z-20">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-800/50">
+                    <div class="reveal active">
+                        <p class="text-3xl font-bold text-white mb-1">2024</p>
+                        <p class="text-sm text-slate-400 uppercase tracking-wider mt-2">Founded</p>
+                    </div>
+                    <div class="reveal active" style="transition-delay: 0.1s;">
+                        <p class="text-3xl font-bold text-white mb-1"><i class="fas fa-map-marked-alt"></i></p>
+                        <p class="text-sm text-slate-400 uppercase tracking-wider mt-2">Multi-City Advisory Support</p>
+                    </div>
+                    <div class="reveal active" style="transition-delay: 0.2s;">
+                        <p class="text-3xl font-bold text-white mb-1"><i class="fas fa-handshake"></i></p>
+                        <p class="text-sm text-slate-400 uppercase tracking-wider mt-2">Insurance Partner Network</p>
+                    </div>
+                    <div class="reveal active" style="transition-delay: 0.3s;">
+                        <p class="text-3xl font-bold text-white mb-1"><i class="fas fa-comments-dollar"></i></p>
+                        <p class="text-sm text-slate-400 uppercase tracking-wider mt-2">Consultation-Based Planning</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 28,000 DAYS CONCEPT -->
+        <section class="py-24 bg-white relative overflow-hidden">
+            <div class="container mx-auto px-6 max-w-5xl text-center">
+                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mt-4 mb-8 reveal">Your Earning Years Are Limited.<br>Your Responsibilities Are Not.</h2>
+                <p class="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed max-w-3xl mx-auto reveal" style="transition-delay: 0.1s;">
+                    Most people earn actively for only a limited part of life, while responsibilities continue for decades. Education, marriage, retirement, medical needs, emergencies, and family security all require early planning.
+                </p>
+                <p class="text-lg md:text-xl text-slate-600 mb-12 leading-relaxed max-w-3xl mx-auto reveal" style="transition-delay: 0.2s;">
+                    PayGain helps customers build a protection-first financial roadmap designed around real-life responsibilities and future uncertainties.
+                </p>
+                <div class="reveal" style="transition-delay: 0.3s;">
+                    <a href="#contact" class="bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 px-10 rounded-full shadow-lg transition-all inline-block">
+                        Understand Your Financial Roadmap
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY CHOOSE PAYGAIN -->
+        <section class="py-24 bg-slate-50 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <span class="text-pink-500 font-bold tracking-wider uppercase text-sm">WHY PAYGAIN</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 reveal">Why Choose PayGain</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 reveal">
+                        <div class="w-14 h-14 bg-pink-50 rounded-xl flex items-center justify-center mb-6"><i class="fas fa-shield-alt text-2xl text-pink-500"></i></div>
+                        <h3 class="font-bold text-xl mb-3 text-slate-900">Protection-First Planning</h3>
+                        <p class="text-slate-600 leading-relaxed">We help you build a financial plan from the foundation: protection first, then savings, income planning, and future growth.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 reveal" style="transition-delay: 0.1s;">
+                        <div class="w-14 h-14 bg-pink-50 rounded-xl flex items-center justify-center mb-6"><i class="fas fa-life-ring text-2xl text-pink-500"></i></div>
+                        <h3 class="font-bold text-xl mb-3 text-slate-900">Renewal Support Guidance</h3>
+                        <p class="text-slate-600 leading-relaxed">PayGain offers Renewal Support options that may help reduce the pressure of long-term premium continuation, subject to eligibility and applicable terms.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 reveal" style="transition-delay: 0.2s;">
+                        <div class="w-14 h-14 bg-pink-50 rounded-xl flex items-center justify-center mb-6"><i class="fas fa-money-bill-wave text-2xl text-pink-500"></i></div>
+                        <h3 class="font-bold text-xl mb-3 text-slate-900">Regular Income Possibilities</h3>
+                        <p class="text-slate-600 leading-relaxed">Explore structured planning options that may support future regular income needs, retirement goals, or family cash-flow planning, subject to selected solutions and terms.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 reveal">
+                        <div class="w-14 h-14 bg-pink-50 rounded-xl flex items-center justify-center mb-6"><i class="fas fa-users text-2xl text-pink-500"></i></div>
+                        <h3 class="font-bold text-xl mb-3 text-slate-900">Family-Centric Approach</h3>
+                        <p class="text-slate-600 leading-relaxed">Our planning approach focuses on child future, retirement security, medical protection, vehicle protection, and long-term family stability.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 reveal" style="transition-delay: 0.1s;">
+                        <div class="w-14 h-14 bg-pink-50 rounded-xl flex items-center justify-center mb-6"><i class="fas fa-handshake text-2xl text-pink-500"></i></div>
+                        <h3 class="font-bold text-xl mb-3 text-slate-900">Trusted Partner Network</h3>
+                        <p class="text-slate-600 leading-relaxed">PayGain works with established insurance partners to help customers access suitable life, health, and general insurance solutions.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 reveal" style="transition-delay: 0.2s;">
+                        <div class="w-14 h-14 bg-pink-50 rounded-xl flex items-center justify-center mb-6"><i class="fas fa-comments text-2xl text-pink-500"></i></div>
+                        <h3 class="font-bold text-xl mb-3 text-slate-900">Consultation-Based Planning</h3>
+                        <p class="text-slate-600 leading-relaxed">We do not believe in one-size-fits-all planning. Our team explains suitable options after understanding your goals, budget, and responsibilities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOLUTIONS -->
+        <section class="py-24 bg-slate-900 text-white relative">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-pink-400 font-bold tracking-wider uppercase text-sm">OUR SOLUTIONS</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mt-3 mb-4 reveal">Explore PayGain Solutions</h2>
+                    <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto reveal" style="transition-delay: 0.1s;">Every family has different goals. PayGain helps you understand suitable options through a guided consultation.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 hover:border-pink-500 transition-all duration-300 reveal">
+                        <div class="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center text-pink-400 mb-6"><i class="fas fa-heart text-xl"></i></div>
+                        <h3 class="text-xl font-bold mb-4">Life Insurance & Family Protection</h3>
+                        <p class="text-slate-400 mb-8 leading-relaxed">Plan for life coverage, family security, premium waiver benefits, and long-term protection through suitable life insurance solutions.</p>
+                        <a href="#contact" class="text-pink-400 font-bold hover:text-pink-300 flex items-center gap-2 group">Speak With an Advisor <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i></a>
+                    </div>
+                    <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 hover:border-pink-500 transition-all duration-300 reveal" style="transition-delay: 0.1s;">
+                        <div class="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center text-pink-400 mb-6"><i class="fas fa-wallet text-xl"></i></div>
+                        <h3 class="text-xl font-bold mb-4">Regular Income Planning</h3>
+                        <p class="text-slate-400 mb-8 leading-relaxed">Explore structured financial solutions that may help create future regular income possibilities for retirement, family support, or long-term needs.</p>
+                        <a href="#contact" class="text-pink-400 font-bold hover:text-pink-300 flex items-center gap-2 group">Discuss Income Planning <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i></a>
+                    </div>
+                    <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 hover:border-pink-500 transition-all duration-300 reveal" style="transition-delay: 0.2s;">
+                        <div class="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center text-pink-400 mb-6"><i class="fas fa-child text-xl"></i></div>
+                        <h3 class="text-xl font-bold mb-4">Child Future Planning</h3>
+                        <p class="text-slate-400 mb-8 leading-relaxed">Prepare for your child’s education, marriage, and important life milestones with disciplined long-term planning.</p>
+                        <a href="#contact" class="text-pink-400 font-bold hover:text-pink-300 flex items-center gap-2 group">Plan Child’s Future <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i></a>
+                    </div>
+                    <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 hover:border-pink-500 transition-all duration-300 reveal">
+                        <div class="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center text-pink-400 mb-6"><i class="fas fa-hospital text-xl"></i></div>
+                        <h3 class="text-xl font-bold mb-4">Health Insurance Planning</h3>
+                        <p class="text-slate-400 mb-8 leading-relaxed">Protect your family’s savings from hospitalisation and medical emergencies with suitable health insurance options.</p>
+                        <a href="#contact" class="text-pink-400 font-bold hover:text-pink-300 flex items-center gap-2 group">Get Health Guidance <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i></a>
+                    </div>
+                    <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 hover:border-pink-500 transition-all duration-300 reveal" style="transition-delay: 0.1s;">
+                        <div class="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center text-pink-400 mb-6"><i class="fas fa-car text-xl"></i></div>
+                        <h3 class="text-xl font-bold mb-4">Motor Insurance Strategy</h3>
+                        <p class="text-slate-400 mb-8 leading-relaxed">For vehicle owners and businesses, PayGain helps explore motor insurance planning with protection and long-term value-focused strategies.</p>
+                        <a href="#contact" class="text-pink-400 font-bold hover:text-pink-300 flex items-center gap-2 group">Explore Motor Planning <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i></a>
+                    </div>
+                    <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 hover:border-pink-500 transition-all duration-300 reveal" style="transition-delay: 0.2s;">
+                        <div class="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center text-pink-400 mb-6"><i class="fas fa-chart-pie text-xl"></i></div>
+                        <h3 class="text-xl font-bold mb-4">Structured Financial Opportunities</h3>
+                        <p class="text-slate-400 mb-8 leading-relaxed">Eligible customers can speak with PayGain to understand structured financial options, fixed-income-style benefits, tenure choices, and documentation before making any decision.</p>
+                        <a href="#contact" class="text-pink-400 font-bold hover:text-pink-300 flex items-center gap-2 group">Request Details <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RENEWAL SUPPORT SECTION -->
+        <section class="py-24 bg-pink-50 relative overflow-hidden">
+            <div class="container mx-auto px-6 max-w-4xl text-center">
+                <span class="text-pink-500 font-bold tracking-wider uppercase text-sm">RENEWAL SUPPORT</span>
+                <div class="w-20 h-20 bg-pink-200 rounded-full flex items-center justify-center mx-auto mt-4 mb-6 text-pink-600 text-3xl"><i class="fas fa-life-ring"></i></div>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6 reveal">Worried About Long-Term Premium Commitments?</h2>
+                <p class="text-lg md:text-xl text-slate-700 mb-6 leading-relaxed reveal" style="transition-delay: 0.1s;">
+                    Many families start financial planning with good intentions but worry about future premium payments. Income changes, business slowdown, medical emergencies, and family expenses can make long-term commitments difficult.
+                </p>
+                <p class="text-lg md:text-xl text-slate-700 mb-10 leading-relaxed reveal" style="transition-delay: 0.2s;">
+                    PayGain’s Renewal Support approach is designed to help eligible customers reduce this concern and continue their financial planning journey with more confidence.
+                </p>
+                <div class="bg-white p-4 rounded-xl inline-block shadow-sm border border-pink-100 mb-10 reveal" style="transition-delay: 0.3s;">
+                    <p class="text-sm text-slate-500 font-medium"><i class="fas fa-info-circle text-pink-500 mr-2"></i> Note: Exact support details, eligibility, documentation, and terms are shared during consultation.</p>
+                </div>
+                <div class="reveal" style="transition-delay: 0.4s;">
+                    <a href="#contact" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-4 px-10 rounded-full shadow-lg transition-all inline-block">
+                        Check Eligibility
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW CONSULTATION WORKS (New Section) -->
+        <section class="py-24 bg-white relative border-t border-slate-200">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="text-center mb-16">
+                    <span class="text-pink-500 font-bold tracking-wider uppercase text-sm">OUR PROCESS</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 reveal">How PayGain Consultation Works</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                    <!-- Connector line for desktop -->
+                    <div class="hidden md:block absolute top-8 left-10 right-10 h-0.5 bg-slate-100 z-0"></div>
+                    
+                    <!-- Step 1 -->
+                    <div class="relative z-10 text-center reveal">
+                        <div class="w-16 h-16 bg-white border-4 border-pink-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-pink-500 font-bold text-xl">1</div>
+                        <h3 class="font-bold text-lg mb-3 text-slate-900">Share Your Goals</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">Tell us about your family, income, responsibilities, and planning needs.</p>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="relative z-10 text-center reveal" style="transition-delay: 0.1s;">
+                        <div class="w-16 h-16 bg-white border-4 border-pink-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-pink-500 font-bold text-xl">2</div>
+                        <h3 class="font-bold text-lg mb-3 text-slate-900">Check Eligibility</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">Our team reviews suitable options based on your age, budget, goals, and documentation.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative z-10 text-center reveal" style="transition-delay: 0.2s;">
+                        <div class="w-16 h-16 bg-white border-4 border-pink-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-pink-500 font-bold text-xl">3</div>
+                        <h3 class="font-bold text-lg mb-3 text-slate-900">Understand Solutions</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">We explain relevant plans, benefits, terms, risks, and official documentation in simple language.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative z-10 text-center reveal" style="transition-delay: 0.3s;">
+                        <div class="w-16 h-16 bg-white border-4 border-pink-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-pink-500 font-bold text-xl">4</div>
+                        <h3 class="font-bold text-lg mb-3 text-slate-900">Decide With Clarity</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">You choose only after understanding the complete structure, conditions, and suitability.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ PREVIEW -->
+        <section class="py-24 bg-slate-50 relative border-t border-slate-200">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-16">
+                    <span class="text-pink-500 font-bold tracking-wider uppercase text-sm">COMMON QUESTIONS</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 reveal">Frequently Asked Questions</h2>
+                    <p class="text-slate-500 mt-4 reveal">Simple answers before your consultation with PayGain.</p>
+                </div>
+                
+                <div class="space-y-4 reveal">
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">How does PayGain help me?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">PayGain helps you explore protection-first financial planning solutions for life coverage, health protection, child future planning, retirement security, regular income possibilities, and long-term family stability.</div>
+                    </details>
+                    
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">Does PayGain show all plan details on the website?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">No. Since financial planning depends on your age, goals, budget, responsibilities, and eligibility, detailed plan information is shared only during consultation.</div>
+                    </details>
+                    
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">What is Renewal Support?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Renewal Support is a PayGain support approach that may help eligible customers reduce the pressure of continuing selected premiums. Exact details are explained after understanding your case.</div>
+                    </details>
+                    
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">Can PayGain help me plan for regular income?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Yes. PayGain helps customers explore structured solutions that may support future regular income needs or passive-income-style benefits, depending on the selected option and applicable terms.</div>
+                    </details>
+
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">Can I choose a plan based on my budget?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Yes. PayGain’s team understands your financial capacity, responsibilities, and goals before suggesting suitable options.</div>
+                    </details>
+
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">How do I get plan details?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">You can call PayGain, email the team, or book a consultation. Our team will explain suitable options privately based on your needs.</div>
+                    </details>
+
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">Are benefits guaranteed?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Benefits vary depending on the selected plan, insurer rules, and eligibility. Certain benefits may be guaranteed per policy terms, while others depend on market or company performance. This is clearly explained using official illustrations during consultation.</div>
+                    </details>
+                    
+                    <details class="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                        <summary class="flex justify-between items-center cursor-pointer p-6 font-semibold text-slate-900 group-hover:text-pink-600 transition hover:bg-slate-50">
+                            <span class="text-lg">What documents should I read before deciding?</span>
+                            <span class="transition-transform duration-300 group-open:rotate-180 w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 group-open:bg-pink-100 text-slate-400 group-open:text-pink-500"><i class="fas fa-chevron-down text-sm"></i></span>
+                        </summary>
+                        <div class="px-6 pb-8 text-slate-600 leading-relaxed pt-2">Customers are advised to read the official policy document, benefit illustration, brochure, and applicable terms and conditions provided by the insurer or company before making any financial decision.</div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEAD CAPTURE FORM -->
+        <section id="contact" class="py-24 bg-white relative border-t border-slate-200">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <div class="text-center mb-12">
+                    <span class="text-pink-500 font-bold tracking-wider uppercase text-sm">GET STARTED</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-3 reveal">Get PayGain Guidance</h2>
+                    <p class="text-slate-500 mt-4 reveal">Share a few details and our team will contact you to understand your requirements and explain suitable options.</p>
+                </div>
+                
+                <form class="bg-slate-50 p-8 md:p-10 rounded-3xl border border-slate-200 shadow-sm reveal" onsubmit="event.preventDefault(); document.getElementById('success-msg').classList.remove('hidden'); this.reset();">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Mobile Number</label>
+                            <input type="tel" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">City</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Age Group</label>
+                            <select required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all bg-white">
+                                <option value="">Select Age Group</option>
+                                <option value="18-25">18 - 25 Years</option>
+                                <option value="26-35">26 - 35 Years</option>
+                                <option value="36-45">36 - 45 Years</option>
+                                <option value="46-55">46 - 55 Years</option>
+                                <option value="55+">55+ Years</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Interested In</label>
+                        <select required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all bg-white">
+                            <option value="">Select an Option</option>
+                            <option value="Life Insurance">Life Insurance & Family Protection</option>
+                            <option value="Health Insurance">Health Insurance</option>
+                            <option value="Motor Insurance">Motor Insurance</option>
+                            <option value="Child Future">Child Future Planning</option>
+                            <option value="Retirement">Retirement / Regular Income</option>
+                            <option value="Renewal Support">Renewal Support</option>
+                            <option value="Career">PayGain Advisor / Career</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Preferred Contact Time</label>
+                        <input type="text" placeholder="e.g., Weekdays after 5 PM" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all">
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Message / Requirement</label>
+                        <textarea rows="4" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1">
+                        Submit & Request Callback
+                    </button>
+                    
+                    <!-- Success Message (Hidden by default) -->
+                    <div id="success-msg" class="hidden mt-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl text-center text-sm font-medium">
+                        Thank you. Our PayGain advisor will contact you shortly to understand your requirement and explain suitable options.
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- DETAILED CORPORATE FOOTER -->
+        <footer class="bg-slate-900 text-white pt-20 pb-12 border-t border-slate-800 reveal">
+            <div class="container mx-auto px-6">
+                <!-- Top Links Section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 border-b border-slate-800 pb-16">
+                    <div class="lg:col-span-1">
+                        <img src="assets/images/pg_logo_no_background.png" alt="PayGain Logo" class="h-16 w-auto object-contain mb-6">
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                            Helping Indian families plan for protection, regular income, renewal support, and long-term financial security through structured financial and insurance-based solutions.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Quick Links</h4>
+                        <ul class="space-y-3 text-slate-400 text-sm">
+                            <li><a href="index.html" class="hover:text-pink-400 transition">Home</a></li>
+                            <li><a href="about_us.html" class="hover:text-pink-400 transition">About Us</a></li>
+                            <li><a href="career.html" class="hover:text-pink-400 transition">Careers / PayGain Advisor</a></li>
+                            <li><a href="faq.html" class="hover:text-pink-400 transition">FAQs</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Our Solutions</h4>
+                        <ul class="space-y-3 text-slate-400 text-sm">
+                            <li><a href="#contact" class="hover:text-pink-400 transition">Life Insurance & Family Protection</a></li>
+                            <li><a href="#contact" class="hover:text-pink-400 transition">Regular Income Planning</a></li>
+                            <li><a href="#contact" class="hover:text-pink-400 transition">Child Future Planning</a></li>
+                            <li><a href="#contact" class="hover:text-pink-400 transition">Health Insurance Planning</a></li>
+                            <li><a href="#contact" class="hover:text-pink-400 transition">Motor Insurance Strategy</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Contact PayGain</h4>
+                        <ul class="space-y-4 text-slate-400 text-sm">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-clock text-pink-500 mt-1 shrink-0 text-base"></i>
+                                <span class="leading-relaxed"><strong>Business Hours:</strong><br>Monday–Saturday, 10:00 AM – 7:00 PM</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-map-marker-alt text-pink-500 mt-1 shrink-0 text-base"></i>
+                                <span class="leading-relaxed">
+                                    <a href="#" class="hover:text-pink-400 transition">3WS4B, 3rd Floor, West Tower, Mani Casadona, Newtown, Kolkata, WB - 700156</a><br><br>
+                                    <strong>Registered Office:</strong> C/O Krishna Banshi Khanra, Vill+PO- Nandapur, East Midnapore, WB - 721625
+                                </span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-phone-alt text-pink-500 shrink-0 text-base"></i>
+                                <span>033 4501 3342</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fab fa-whatsapp text-pink-500 shrink-0 text-base"></i>
+                                <a href="https://wa.me/910000000000" class="hover:text-pink-400 transition">+91 XXXXX XXXXX</a>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-envelope text-pink-500 shrink-0 text-base"></i>
+                                <a href="mailto:info.paygain@gmail.com" class="hover:text-pink-400 transition">info.paygain@gmail.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-12 p-6 bg-slate-900/50 rounded-xl text-xs text-slate-400 leading-relaxed text-justify mb-8 border border-slate-800">
+                    <strong>Disclaimer:</strong> The information provided on this website is for general awareness and educational purposes only. Detailed plan structures, premium illustrations, Renewal Support details, returns, policy benefits, preference share terms, eligibility conditions, and documentation are shared only during consultation and through official documents. Product features, benefits, returns, tax treatment, policy conditions, dividend payouts, and outcomes may vary based on selected plans, insurer/company terms, customer eligibility, applicable laws, and official documentation. Customers should read all policy documents, benefit illustrations, offer documents, terms, conditions, exclusions, and risk factors carefully before making any financial or insurance decision.
+                </div>
+
+                <!-- Comprehensive Corporate Information (MCA Standards) -->
+                <div class="mb-12">
+                     <h4 class="text-lg font-bold mb-6 text-slate-300">Corporate Information</h4>
+                     <p class="text-slate-500 text-xs leading-relaxed text-justify mb-8">
+                         <strong>PAYGAIN MULTI SERVICES PRIVATE LIMITED</strong> is a Private Limited Company, governed by the Companies Act as a company limited by shares. Classified as a Non-government company, it is registered under the Registrar of Companies <strong>RoC-Kolkata</strong>. According to the Ministry of Corporate Affairs (MCA), this company was incorporated on <strong>31-01-2024</strong>. Its Corporate Identification Number (CIN) is <strong>U70200WB2024PTC267967</strong>, and it carries the registration number <strong>267967</strong>. Currently, its eFiling status is listed as "<strong>Active</strong>".
+                     </p>
+                </div>
+
+                <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between text-slate-500 text-xs gap-4">
+                    <p>&copy; 2024 PayGain Multi Services Private Limited. All rights reserved.</p>
+                    <div class="flex flex-wrap items-center gap-4 justify-center md:justify-start">
+                        <a href="privacy.html" class="hover:text-slate-300 transition">Privacy Policy</a>
+                        <span class="hidden sm:inline">|</span>
+                        <a href="terms.html" class="hover:text-slate-300 transition">Terms of Service</a>
+                        <span class="hidden sm:inline">|</span>
+                        <a href="faq.html" class="hover:text-slate-300 transition">Disclaimers</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT LOGIC -->
+    <!-- ============================================ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            reveals.forEach(reveal => observer.observe(reveal));
+        });
+    </script>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/69c78d0232b9fc1c3eedd325/1jkpntlb8';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+</body>
+</html>
+"""
+
+with open('c:\\Users\\naman\\OneDrive\\Desktop\\PG_Website\\index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("Updated index.html")

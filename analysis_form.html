@@ -76,6 +76,8 @@
     </div>
 
     <script>
+        const API_BASE_URL = "https://website-pg-two.vercel.app";
+
         async function handleAnalysisSubmit(e) {
             e.preventDefault();
             
@@ -95,7 +97,7 @@
             };
 
             try {
-                const response = await fetch('/api/submit-analysis', {
+                const response = await fetch(`${API_BASE_URL}/api/submit-analysis`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

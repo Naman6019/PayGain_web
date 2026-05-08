@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<!-- 
-PayGain static cPanel frontend.
-Do not add backend secrets here.
-Forms submit to the Vercel API endpoint.
-Existing software login is handled separately at https://paygain.net/login-pay/member/
--->
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -84,6 +77,7 @@ Existing software login is handled separately at https://paygain.net/login-pay/m
 
     <script>
         const API_BASE_URL = "https://website-pg-two.vercel.app";
+
         async function handleAnalysisSubmit(e) {
             e.preventDefault();
             
@@ -103,7 +97,7 @@ Existing software login is handled separately at https://paygain.net/login-pay/m
             };
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/submit-analysis', {
+                const response = await fetch(`${API_BASE_URL}/api/submit-analysis`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

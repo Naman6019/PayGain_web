@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<!-- 
-PayGain static cPanel frontend.
-Do not add backend secrets here.
-Forms submit to the Vercel API endpoint.
-Existing software login is handled separately at https://paygain.net/login-pay/member/
--->
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -173,7 +166,9 @@ Existing software login is handled separately at https://paygain.net/login-pay/m
                                         <option value="child">Child Future Planning</option>
                                         <option value="health">Health Insurance Planning</option>
                                         <option value="motor">Motor Insurance Strategy</option>
+                                        <option value="renewal">Renewal Support</option>
                                         <option value="preference">Preference Share Opportunities</option>
+                                        <option value="career">PayGain Advisor / Career</option>
                                     </select>
                                 </div>
 
@@ -349,29 +344,21 @@ Existing software login is handled separately at https://paygain.net/login-pay/m
                                 </div>
 
                             </div>
-                            
-                            <!-- STEP 3: CONSENT & SUBMISSION -->
-                            <div id="form-step-3" style="display: none;">
-                                <h3 class="text-xl font-bold text-slate-800 mb-6 mt-10 pt-6 border-t border-slate-100">Consent & Submission</h3>
-                                
-                                <div class="mb-6">
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Additional Message / Requirement</label>
-                                    <textarea id="message" rows="3" placeholder="Tell us more about your needs..." class="w-full px-4 py-4 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 bg-slate-50"></textarea>
-                                </div>
 
-                                <div class="mb-8 p-5 bg-slate-50 rounded-xl border border-slate-200 hover:border-pink-300 transition">
-                                    <label class="flex items-start cursor-pointer">
-                                        <input type="checkbox" id="consent" required class="mt-1 w-5 h-5 rounded border-slate-300 text-pink-500 focus:ring-pink-500 cursor-pointer">
-                                        <span class="ml-3 text-sm text-slate-600 leading-relaxed">
-                                            I agree that PayGain may contact me regarding my requirement and may coordinate with relevant insurance/financial partners to help me understand suitable options. I understand that final quotations, benefits, terms, eligibility, and documentation are provided by the respective partner/insurer/company.
-                                        </span>
-                                    </label>
-                                </div>
+                            <div id="form-step-3" class="mt-8 mb-8 p-5 bg-slate-50 rounded-xl border border-slate-200">
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Additional Message / Requirement</label>
+                                <textarea id="message" rows="3" placeholder="Tell us more about your needs..." class="w-full px-4 py-4 mb-5 border border-slate-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 bg-white"></textarea>
+
+                                <label class="flex items-start cursor-pointer mb-5">
+                                    <input type="checkbox" id="consent" required class="mt-1 w-5 h-5 rounded border-slate-300 text-pink-500 focus:ring-pink-500 cursor-pointer">
+                                    <span class="ml-3 text-sm text-slate-600 leading-relaxed">
+                                        I agree that PayGain may contact me regarding my requirement and may coordinate with relevant insurance/financial partners to help me understand suitable options. I understand that final quotations, benefits, terms, eligibility, and documentation are provided by the respective partner/insurer/company.
+                                    </span>
+                                </label>
 
                                 <button type="submit" id="submitButton" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 text-lg mb-2">
                                     Submit Requirement
                                 </button>
-                                
                                 <p id="solution-note" class="text-xs text-slate-500 text-center italic"></p>
                             </div>
                             
@@ -440,12 +427,12 @@ Existing software login is handled separately at https://paygain.net/login-pay/m
                 <div>
                     <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Our Solutions</h4>
                     <ul class="space-y-3 text-slate-400 text-sm">
-                        <li><a href="contact.html?product=life" class="hover:text-pink-400 transition">Life Insurance & Family Protection</a></li>
-                        <li><a href="contact.html?product=income" class="hover:text-pink-400 transition">Regular Income Planning</a></li>
-                        <li><a href="contact.html?product=child" class="hover:text-pink-400 transition">Child Future Planning</a></li>
-                        <li><a href="contact.html?product=health" class="hover:text-pink-400 transition">Health Insurance Planning</a></li>
-                        <li><a href="contact.html?product=motor" class="hover:text-pink-400 transition">Motor Insurance Strategy</a></li>
-                        <li><a href="contact.html?product=preference" class="hover:text-pink-400 transition">Preference Share Opportunities</a></li>
+                        <li><a href="contact.html?product=life&v=20260508" class="hover:text-pink-400 transition">Life Insurance & Family Protection</a></li>
+                        <li><a href="contact.html?product=income&v=20260508" class="hover:text-pink-400 transition">Regular Income Planning</a></li>
+                        <li><a href="contact.html?product=child&v=20260508" class="hover:text-pink-400 transition">Child Future Planning</a></li>
+                        <li><a href="contact.html?product=health&v=20260508" class="hover:text-pink-400 transition">Health Insurance Planning</a></li>
+                        <li><a href="contact.html?product=motor&v=20260508" class="hover:text-pink-400 transition">Motor Insurance Strategy</a></li>
+                        <li><a href="contact.html?product=preference&v=20260508" class="hover:text-pink-400 transition">Preference Share Opportunities</a></li>
                     </ul>
                 </div>
                 <div>
@@ -548,6 +535,20 @@ Existing software login is handled separately at https://paygain.net/login-pay/m
                 desc: 'Speak with an advisor to understand preference options, eligibility, tenure, and risks before making any financial decision. Information is shared strictly via official documentation.',
                 btnText: 'Request Consultation',
                 note: 'Preference Share details are shared only during consultation and through official documentation. This inquiry form does not represent an offer, guarantee, or investment advice.'
+            },
+            'renewal': {
+                title: 'Renewal Support Guidance',
+                subtitle: 'Discuss premium-continuation support options.',
+                desc: 'PayGain helps customers understand Renewal Support possibilities based on selected solutions, eligibility, and official terms. Detailed options are discussed only during consultation.',
+                btnText: 'Request Renewal Support Guidance',
+                note: 'Renewal Support depends on selected plans, eligibility, documentation, and applicable terms.'
+            },
+            'career': {
+                title: 'PayGain Advisor / Career',
+                subtitle: 'Share your interest in working with PayGain.',
+                desc: 'Use this form to share your interest in becoming a PayGain advisor or discussing career opportunities with the team.',
+                btnText: 'Submit Career Inquiry',
+                note: 'A PayGain team member will contact you to discuss the opportunity.'
             }
         };
 
@@ -605,7 +606,7 @@ Existing software login is handled separately at https://paygain.net/login-pay/m
             renderFaq();
             document.getElementById('interestedProduct').addEventListener('change', handleProductChange);
             const urlParams = new URLSearchParams(window.location.search);
-            const product = urlParams.get('product');
+            const product = urlParams.get('product') || 'life';
             if (product) {
                 const select = document.getElementById('interestedProduct');
                 for (let i = 0; i < select.options.length; i++) {
@@ -658,7 +659,7 @@ Existing software login is handled separately at https://paygain.net/login-pay/m
             }
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/submit-analysis', {
+                const response = await fetch(`${API_BASE_URL}/api/submit-analysis`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
@@ -695,7 +696,7 @@ Existing software login is handled separately at https://paygain.net/login-pay/m
         <a href="https://wa.me/910000000000" class="flex flex-col items-center justify-center text-green-500 hover:text-green-600 text-[10px] font-bold w-1/3 border-l border-r border-slate-100 py-1">
             <i class="fab fa-whatsapp text-xl mb-1"></i> WhatsApp
         </a>
-        <a href="contact.html" class="flex flex-col items-center justify-center text-pink-500 hover:text-pink-600 text-[10px] font-bold w-1/3 py-1">
+        <a href="contact.html?product=life&v=20260508" class="flex flex-col items-center justify-center text-pink-500 hover:text-pink-600 text-[10px] font-bold w-1/3 py-1">
             <i class="fas fa-clipboard-check text-xl mb-1"></i> Eligibility
         </a>
     </div>

@@ -12,8 +12,7 @@ Existing software login is handled separately at https://paygain.net/login-pay/m
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Requirement - PayGain</title>
     <link rel="icon" type="image/png" href="assets/images/Logo.png">
-    <script src="https://cdn.tailwindcss.com">
-        const API_BASE_URL = "https://website-pg-two.vercel.app";</script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .conditional-section { display: none; }
@@ -604,6 +603,7 @@ Existing software login is handled separately at https://paygain.net/login-pay/m
 
         window.onload = function() {
             renderFaq();
+            document.getElementById('interestedProduct').addEventListener('change', handleProductChange);
             const urlParams = new URLSearchParams(window.location.search);
             const product = urlParams.get('product');
             if (product) {

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<!-- 
+PayGain static cPanel frontend.
+Do not add backend secrets here.
+Forms submit to the Vercel API endpoint.
+Existing software login is handled separately at https://paygain.net/login-pay/member/
+-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Supabase Meta Tags for Market Data Fetching -->
+    <meta name="supabase-url" content="https://lgzepbfzjbeyfsdormde.supabase.co">
+    <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnemVwYmZ6amJleWZzZG9ybWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMDMzNTEsImV4cCI6MjA5MDY3OTM1MX0.xV82gm7YjlT7-A3uMtnQPnpYOGBL4VkEgyjRY6IPFE4">
+    
+    <title>PayGain Pulse - Live Market Data & Planning</title>
+    <link rel="icon" type="image/png" href="assets/images/Logo.png">
+    
+    <!-- Tailwind CSS for Professional Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chart.js for Data Visualization -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+    <style>
+        :root {
+            --primary-blue: #0f172a; 
+            --accent-pink: #ec4899;  
+            --pink-hover: #db2777;   
+            --text-grey: #475569;
+        }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; overflow-x: hidden; }
+        html { scroll-behavior: smooth; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .pulse-card { transition: transform 0.2s; }
+        .pulse-card:hover { transform: translateY(-3px); }
+        /* Hide native number spin buttons */
+        input[type=number].no-spin::-webkit-inner-spin-button, 
+        input[type=number].no-spin::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number].no-spin {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- HEADER -->
+    <header class="fixed w-full top-0 z-50 transition-all duration-300 bg-slate-900 shadow-lg border-b border-slate-800">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-2 group cursor-pointer" onclick="window.location.href='index.html'">
+                <img src="assets/images/pg_logo_no_background.png" alt="PayGain Logo" class="h-12 w-auto object-contain group-hover:opacity-90 transition">
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-4">
+                <a href="about_us.html" class="hidden md:block text-slate-300 hover:text-pink-400 font-semibold transition">
+                    About Us
+                </a>
+                <a href="pulse.html" class="text-slate-300 hover:text-pink-400 font-semibold transition text-sm md:text-base">
+                    PayGain Pulse
+                </a>
+                <a href="analysis_form.html" class="hidden md:block bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-semibold py-2.5 px-6 rounded-full shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 hover:-translate-y-0.5 transition-all duration-300">
+                    Check Eligibility
+                </a>
+                <button onclick="toggleModal('loginModal')" class="border-2 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white font-semibold py-2 px-6 rounded-full transition-all duration-300">
+                    Login
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="h-20"></div>
+
+    <!-- 9a: PAGE HERO -->
+    <section class="bg-slate-900 text-white py-16 relative overflow-hidden border-b border-slate-800 fade-in">
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">PayGain <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-300">Pulse</span></h1>
+            <p class="text-lg text-slate-300 max-w-2xl mx-auto">Live market data, news, and planning tools — updated at market open and close.</p>
+        </div>
+    </section>
+
+    <!-- 9b: LIVE MARKET SNAPSHOT -->
+    <section class="py-12 bg-slate-50 fade-in">
+        <div class="container mx-auto px-6">
+            <h2 class="text-2xl font-bold text-slate-900 mb-8 border-l-4 border-pink-500 pl-4">Live Market Snapshot <span id="last-updated" class="text-xs font-normal text-slate-500 ml-4 hidden">Last updated: <span id="time-ago">--</span> mins ago</span></h2>
+            
+            <div id="market-error" class="hidden bg-red-100 text-red-700 p-4 rounded-lg mb-8">
+                <i class="fas fa-exclamation-triangle mr-2"></i> Market data currently unavailable.
+            </div>
+
+            <!-- Stat Cards -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10" id="stat-cards">
+                <!-- Data populated by JS, placeholder skeleton -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-slate-500 text-sm font-semibold mb-2">Nifty 50</p>
+                    <p class="text-2xl font-bold text-slate-800" id="nifty50-val">--</p>
+                    <p class="text-sm mt-1" id="nifty50-chg">--</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-slate-500 text-sm font-semibold mb-2">Nifty Bank</p>
+                    <p class="text-2xl font-bold text-slate-800" id="niftybank-val">--</p>
+                    <p class="text-sm mt-1" id="niftybank-chg">--</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-slate-500 text-sm font-semibold mb-2">FII Net Flow</p>
+                    <p class="text-2xl font-bold text-slate-800" id="fii-val">-- <span class="text-xs text-slate-400 font-normal">Cr</span></p>
+                    <p class="text-sm text-slate-500 mt-1" id="fii-date">--</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-slate-500 text-sm font-semibold mb-2">DII Net Flow</p>
+                    <p class="text-2xl font-bold text-slate-800" id="dii-val">-- <span class="text-xs text-slate-400 font-normal">Cr</span></p>
+                    <p class="text-sm text-slate-500 mt-1" id="dii-date">--</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Nifty Trend Chart -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
+                        <h3 class="text-slate-800 font-bold" id="nifty-trend-title">Nifty 50 Trend</h3>
+                        <div class="flex bg-slate-200 p-1 rounded-lg w-fit">
+                            <button class="trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all bg-white shadow-sm text-pink-600" data-range="1d">1D</button>
+                            <button class="trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all text-slate-500 hover:text-slate-700" data-range="30d">30D</button>
+                            <button class="trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all text-slate-500 hover:text-slate-700" data-range="6mo">6M</button>
+                            <button class="trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all text-slate-500 hover:text-slate-700" data-range="1y">1Y</button>
+                            <button class="trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all text-slate-500 hover:text-slate-700" data-range="5y">5Y</button>
+                        </div>
+                    </div>
+                    <div class="relative h-64 w-full">
+                        <canvas id="niftyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- FD Rates Table -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 overflow-x-auto">
+                    <h3 class="text-slate-800 font-bold mb-4">Fixed Deposit Rates (%)</h3>
+                    <table class="w-full text-left text-sm text-slate-600">
+                        <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200">
+                            <tr>
+                                <th class="py-3 px-2">Bank</th>
+                                <th class="py-3 px-2">1 Yr</th>
+                                <th class="py-3 px-2">2 Yr</th>
+                                <th class="py-3 px-2">3 Yr</th>
+                                <th class="py-3 px-2">5 Yr</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fd-table-body">
+                            <!-- Populated by JS -->
+                            <tr><td colspan="5" class="py-4 text-center">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9c: LATEST MARKET ANNOUNCEMENTS -->
+    <section class="py-12 bg-white fade-in">
+        <div class="container mx-auto px-6">
+            <h2 class="text-2xl font-bold text-slate-900 mb-8 border-l-4 border-pink-500 pl-4">Latest Market Announcements</h2>
+            
+            <div id="news-container" class="space-y-4 max-w-4xl">
+                <!-- Announcements go here -->
+                <p class="text-slate-500" id="news-loading">Loading announcements...</p>
+            </div>
+            
+            <button id="load-more-news" class="mt-8 hidden border border-slate-300 text-slate-600 hover:bg-slate-50 font-semibold py-2 px-6 rounded-full transition-all">
+                Load More
+            </button>
+        </div>
+    </section>
+
+    <!-- 9d: SIP CALCULATOR -->
+    <section class="py-16 bg-slate-50 border-t border-slate-200 fade-in">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+                <h2 class="text-2xl font-bold text-slate-900 border-l-4 border-pink-500 pl-4 m-0">Investment Calculator</h2>
+                
+                <div class="flex bg-slate-200 p-1 rounded-lg w-fit">
+                    <button id="calc-sip-btn" class="px-6 py-1.5 rounded-md text-sm font-bold transition-all bg-white shadow-sm text-pink-600">SIP</button>
+                    <button id="calc-lumpsum-btn" class="px-6 py-1.5 rounded-md text-sm font-bold transition-all text-slate-500 hover:text-slate-700">Lumpsum</button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    
+                    <!-- Controls -->
+                    <div class="space-y-8">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label id="inv-type-label" class="font-semibold text-slate-700">Monthly Investment</label>
+                                <span class="font-bold text-slate-900 bg-pink-50 px-3 py-1 rounded-md text-sm">₹<span id="sip-monthly-label">5000</span></span>
+                            </div>
+                            <input type="range" id="sip-monthly" min="100" max="500000" step="500" value="5000" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="font-semibold text-slate-700">Expected Annual Return</label>
+                                <span class="font-bold text-slate-900 bg-pink-50 px-3 py-1 rounded-md text-sm"><span id="sip-rate-label">12</span>%</span>
+                            </div>
+                            <input type="range" id="sip-rate" min="1" max="30" step="0.5" value="12" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="font-semibold text-slate-700">Investment Duration</label>
+                                <span class="font-bold text-slate-900 bg-pink-50 px-3 py-1 rounded-md text-sm"><span id="sip-years-label">10</span> Years</span>
+                            </div>
+                            <input type="range" id="sip-years" min="1" max="40" step="1" value="10" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                        </div>
+                        
+                        <div class="pt-6">
+                            <a href="analysis_form.html" class="inline-block bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-3 px-8 rounded-full shadow-lg shadow-pink-500/30 transition-all text-center w-full md:w-auto">
+                                Plan with PayGain <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Results & Chart -->
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="grid grid-cols-2 gap-4 w-full mb-8">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+                                <p class="text-xs text-slate-500 uppercase tracking-widest mb-1">Total Invested</p>
+                                <p class="text-xl font-bold text-slate-800">₹<span id="sip-invested-val">6,00,000</span></p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+                                <p class="text-xs text-slate-500 uppercase tracking-widest mb-1">Est. Returns</p>
+                                <p class="text-xl font-bold text-green-600">₹<span id="sip-returns-val">5,61,695</span></p>
+                            </div>
+                            <div class="col-span-2 bg-slate-800 p-5 rounded-xl border border-slate-700 text-center shadow-inner">
+                                <p class="text-sm text-pink-300 uppercase tracking-widest mb-1">Total Maturity Value</p>
+                                <p class="text-3xl font-bold text-white">₹<span id="sip-total-val">11,61,695</span></p>
+                            </div>
+                        </div>
+
+                        <div class="w-48 h-48 relative">
+                            <canvas id="sipChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9e: INFLATION & RETIREMENT CALCULATOR -->
+    <section class="py-16 bg-white border-t border-slate-200 fade-in">
+        <div class="container mx-auto px-6">
+            <h2 class="text-2xl font-bold text-slate-900 mb-8 border-l-4 border-pink-500 pl-4">Inflation & Retirement Calculator</h2>
+            
+            <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-8 hover:shadow-xl transition-shadow">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    
+                    <!-- Controls -->
+                    <div class="space-y-8">
+                        <!-- Current Expenses -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="font-semibold text-slate-700">Current Expenses</label>
+                                <div class="flex items-center gap-2">
+                                    <select id="inf-expense-type" class="text-sm bg-slate-100 border border-slate-200 text-slate-700 rounded p-1 font-semibold outline-none cursor-pointer">
+                                        <option value="monthly">Monthly</option>
+                                        <option value="yearly">Yearly</option>
+                                    </select>
+                                    <div class="relative items-center flex">
+                                        <span class="absolute left-2 text-slate-500 font-bold">₹</span>
+                                        <input type="number" id="inf-expense-input" value="50000" class="no-spin w-32 pl-6 pr-2 py-1 text-sm font-bold text-slate-900 bg-pink-50 rounded-md border border-pink-100 outline-none focus:ring-2 focus:ring-pink-300 transition-all text-right">
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="range" id="inf-expense" min="10000" max="500000" step="1000" value="50000" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                        </div>
+
+                        <!-- Expected Inflation Rate -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="font-semibold text-slate-700" title="Average historical inflation is ~6%">Expected Inflation Rate ⓘ</label>
+                                <div class="relative items-center flex">
+                                    <input type="number" id="inf-rate-input" value="6" step="0.5" class="no-spin w-20 pr-6 pl-2 py-1 text-sm text-right font-bold text-slate-900 bg-pink-50 rounded-md border border-pink-100 outline-none focus:ring-2 focus:ring-pink-300 transition-all">
+                                    <span class="absolute right-2 text-slate-500 font-bold text-sm">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="inf-rate" min="2" max="15" step="0.5" value="6" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                        </div>
+
+                        <!-- Time to Retirement -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="font-semibold text-slate-700">Time to Build Corpus</label>
+                                <div class="relative items-center flex">
+                                    <input type="number" id="inf-years-input" value="15" class="no-spin w-20 pr-8 pl-2 py-1 text-sm text-right font-bold text-slate-900 bg-pink-50 rounded-md border border-pink-100 outline-none focus:ring-2 focus:ring-pink-300 transition-all">
+                                    <span class="absolute right-2 text-slate-500 font-bold text-xs">Yrs</span>
+                                </div>
+                            </div>
+                            <input type="range" id="inf-years" min="1" max="40" step="1" value="15" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                        </div>
+                        
+                        <!-- Retirement Duration -->
+                        <div class="pt-4 border-t border-slate-100">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="font-semibold text-slate-500 text-sm">Post-Retirement Duration (Sustenance)</label>
+                                <div class="relative items-center flex">
+                                    <input type="number" id="inf-ret-years-input" value="20" class="no-spin w-20 pr-8 pl-2 py-1 text-sm text-right font-bold text-slate-600 bg-slate-50 rounded-md border border-slate-200 outline-none focus:ring-2 focus:ring-pink-300 transition-all">
+                                    <span class="absolute right-2 text-slate-400 font-bold text-xs">Yrs</span>
+                                </div>
+                            </div>
+                            <input type="range" id="inf-ret-years" min="5" max="40" step="1" value="20" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-400">
+                        </div>
+
+                        <!-- Expected Return -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="font-semibold text-slate-500 text-sm">Expected Return on Corpus</label>
+                                <div class="relative items-center flex">
+                                    <input type="number" id="inf-ret-rate-input" value="8" step="0.5" class="no-spin w-20 pr-6 pl-2 py-1 text-sm text-right font-bold text-slate-600 bg-slate-50 rounded-md border border-slate-200 outline-none focus:ring-2 focus:ring-pink-300 transition-all">
+                                    <span class="absolute right-2 text-slate-400 font-bold text-sm">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="inf-ret-rate" min="4" max="15" step="0.5" value="8" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-400">
+                        </div>
+                    </div>
+
+                    <!-- Results & Chart -->
+                    <div class="flex flex-col justify-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
+                        
+                        <!-- Outputs -->
+                        <div class="grid grid-cols-2 gap-4 w-full mb-6 relative">
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-center">
+                                <p class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-widest mb-1">Future <span id="inf-mode-text">Monthly</span> Expense</p>
+                                <p class="text-lg sm:text-xl font-bold text-rose-500">₹<span id="inf-future-expense-val">1,19,827</span></p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 text-center">
+                                <p class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-widest mb-1">Future Yearly Exp.</p>
+                                <p class="text-lg sm:text-xl font-bold text-pink-600">₹<span id="inf-future-yearly-val">14,37,924</span></p>
+                            </div>
+                            
+                            <!-- Master Result Box -->
+                            <div class="col-span-2 bg-slate-900 p-5 rounded-xl border border-slate-800 shadow-xl mt-2 overflow-hidden relative text-center">
+                                <div class="absolute -right-4 -bottom-4 opacity-10 text-pink-500"><i class="fas fa-bullseye text-7xl"></i></div>
+                                <p class="text-xs text-pink-300 uppercase tracking-widest mb-1 relative z-10">Target Retirement Corpus Required</p>
+                                <p class="text-3xl md:text-4xl font-black text-white relative z-10">₹<span id="inf-corpus-val">2.34 Cr</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Chart -->
+                        <h4 class="text-center text-sm font-bold text-slate-700 mb-2">Yearly Expense Growth</h4>
+                        <div class="w-full h-44 relative">
+                            <canvas id="inflationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-white pt-20 pb-12 border-t border-slate-800 reveal">
+            <div class="container mx-auto px-6">
+                <!-- Top Links Section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 border-b border-slate-800 pb-16">
+                    <div class="lg:col-span-1">
+                        <img src="assets/images/pg_logo_no_background.png" alt="PayGain Logo" class="h-16 w-auto object-contain mb-6">
+                        <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                            Helping Indian families plan for protection, regular income, renewal support, and long-term financial security through structured financial and insurance-based solutions.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Quick Links</h4>
+                        <ul class="space-y-3 text-slate-400 text-sm">
+                            <li><a href="index.html" class="hover:text-pink-400 transition">Home</a></li>
+                            <li><a href="about_us.html" class="hover:text-pink-400 transition">About Us</a></li>
+                            <li><a href="career.html" class="hover:text-pink-400 transition">Careers / PayGain Advisor</a></li>
+                            <li><a href="faq.html" class="hover:text-pink-400 transition">FAQs</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Our Solutions</h4>
+                        <ul class="space-y-3 text-slate-400 text-sm">
+                            <li><a href="index.html#contact" class="hover:text-pink-400 transition">Life Insurance & Family Protection</a></li>
+                            <li><a href="index.html#contact" class="hover:text-pink-400 transition">Regular Income Planning</a></li>
+                            <li><a href="index.html#contact" class="hover:text-pink-400 transition">Child Future Planning</a></li>
+                            <li><a href="index.html#contact" class="hover:text-pink-400 transition">Health Insurance Planning</a></li>
+                            <li><a href="index.html#contact" class="hover:text-pink-400 transition">Motor Insurance Strategy</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 text-white tracking-wide">Contact PayGain</h4>
+                        <ul class="space-y-4 text-slate-400 text-sm">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-clock text-pink-500 mt-1 shrink-0 text-base"></i>
+                                <span class="leading-relaxed"><strong>Business Hours:</strong><br>Monday-Friday, 11:00 AM - 5:00 PM</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-map-marker-alt text-pink-500 mt-1 shrink-0 text-base"></i>
+                                <span class="leading-relaxed">
+                                    <a href="#" class="hover:text-pink-400 transition">3WS4B, 3rd Floor, West Tower, Mani Casadona, Newtown, Kolkata, WB - 700156</a><br><br>
+                                    <strong>Registered Office:</strong> C/O Krishna Banshi Khanra, Vill+PO- Nandapur, East Midnapore, WB - 721625<br><a href="https://maps.google.com/?q=3WS4B,+3rd+Floor,+West+Tower,+Mani+Casadona,+Newtown,+Kolkata,+WB+-+700156" target="_blank" class="hover:text-pink-400 transition underline text-pink-500 mt-2 inline-block"><i class="fas fa-map-marker-alt"></i> View on Google Maps</a>
+                                </span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-phone-alt text-pink-500 shrink-0 text-base"></i>
+                                <span>033 4501 3342</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fab fa-whatsapp text-pink-500 shrink-0 text-base"></i>
+                                <a href="https://wa.me/910000000000" class="hover:text-pink-400 transition">+91 XXXXX XXXXX</a>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-envelope text-pink-500 shrink-0 text-base"></i>
+                                <a href="mailto:info.paygain@gmail.com" class="hover:text-pink-400 transition">info.paygain@gmail.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-12 p-6 bg-slate-900/50 rounded-xl text-xs text-slate-400 leading-relaxed text-justify mb-8 border border-slate-800">
+                    <strong>Disclaimer:</strong> The information provided on this website is for general awareness and educational purposes only. Detailed plan structures, premium illustrations, Renewal Support details, returns, policy benefits, preference share terms, eligibility conditions, and documentation are shared only during consultation and through official documents. Product features, benefits, returns, tax treatment, policy conditions, dividend payouts, and outcomes may vary based on selected plans, insurer/company terms, customer eligibility, applicable laws, and official documentation. Customers should read all policy documents, benefit illustrations, offer documents, terms, conditions, exclusions, and risk factors carefully before making any financial or insurance decision.
+                </div>
+
+                <!-- Comprehensive Corporate Information (MCA Standards) -->
+                <div class="mb-12">
+                     <h4 class="text-lg font-bold mb-6 text-slate-300">Corporate Information</h4>
+                     <p class="text-slate-500 text-xs leading-relaxed text-justify mb-8">
+                         <strong>PAYGAIN MULTI SERVICES PRIVATE LIMITED</strong> is a Private Limited Company, governed by the Companies Act as a company limited by shares. Classified as a Non-government company, it is registered under the Registrar of Companies <strong>RoC-Kolkata</strong>. According to the Ministry of Corporate Affairs (MCA), this company was incorporated on <strong>31-01-2024</strong>. Its Corporate Identification Number (CIN) is <strong>U70200WB2024PTC267967</strong>, and it carries the registration number <strong>267967</strong>. Currently, its eFiling status is listed as "<strong>Active</strong>".
+                     </p>
+                </div>
+
+                <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between text-slate-500 text-xs gap-4">
+                    <p>&copy; 2024 PayGain Multi Services Private Limited. All rights reserved.</p>
+                    <div class="flex flex-wrap items-center gap-4 justify-center md:justify-start">
+                        <a href="privacy.html" class="hover:text-slate-300 transition">Privacy Policy</a>
+                        <span class="hidden sm:inline">|</span>
+                        <a href="terms.html" class="hover:text-slate-300 transition">Terms of Service</a>
+                        <span class="hidden sm:inline">|</span>
+                        <a href="faq.html" class="hover:text-slate-300 transition">Disclaimers</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    <!-- LOGIN MODAL (Unchanged) -->
+    <div id="loginModal" class="modal opacity-0 pointer-events-none transition-opacity duration-300 fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/80 backdrop-blur-sm p-4">
+        <!-- Content here -->
+    </div>
+
+    <!-- MAIN LOGIC SCRIPT -->
+    <script>
+        // Modal Logic
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal.classList.contains('opacity-0')) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        // formatting helpers
+        const formatMoney = (val) => new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(val);
+        const formatChg = (val) => {
+            if(!val) return '--';
+            const num = parseFloat(val);
+            if(num > 0) return `<span class="text-green-500 font-semibold">▲ ${num}</span>`;
+            if(num < 0) return `<span class="text-red-500 font-semibold">▼ ${Math.abs(num)}</span>`;
+            return `<span class="text-slate-500">${num}</span>`;
+        };
+
+        // Nifty Trend UI Logic
+        let currentTrendData = {};
+        let niftyChartInstance = null;
+
+        function renderNiftyChart(range) {
+            const dataArr = currentTrendData[range] || [];
+            if(dataArr.length === 0) return;
+
+            const labels = dataArr.map(d => {
+                if (range === '1d') return d.date; // HH:mm
+                const parts = d.date.split('-'); // YYYY-MM-DD
+                return range === '5y' ? `${parts[1]}/${parts[0].slice(2)}` : `${parts[2]}/${parts[1]}`;
+            });
+            const values = dataArr.map(d => d.close);
+
+            if(niftyChartInstance) {
+                niftyChartInstance.data.labels = labels;
+                niftyChartInstance.data.datasets[0].data = values;
+                niftyChartInstance.options.scales.y.min = Math.min(...values) * 0.99;
+                niftyChartInstance.update();
+            } else {
+                niftyChartInstance = new Chart(document.getElementById('niftyChart'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Nifty 50 Close',
+                            data: values,
+                            borderColor: '#ec4899', // pink-500
+                            backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 0,
+                            pointHoverRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+                        scales: {
+                            x: { grid: { display: false } },
+                            y: { display: false, min: Math.min(...values) * 0.99 }
+                        }
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.trend-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const range = e.target.getAttribute('data-range');
+                    if(!currentTrendData[range]) return;
+                    
+                    document.querySelectorAll('.trend-btn').forEach(b => {
+                        b.className = "trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all text-slate-500 hover:text-slate-700";
+                    });
+                    e.target.className = "trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all bg-white shadow-sm text-pink-600";
+                    
+                    renderNiftyChart(range);
+                });
+            });
+        });
+
+        // 9e: DATA FETCH LOGIC
+        async function fetchMarketData() {
+            const supabaseUrl = document.querySelector('meta[name="supabase-url"]').content;
+            const anonKey = document.querySelector('meta[name="supabase-anon-key"]').content;
+
+            if (supabaseUrl === 'YOUR_SUPABASE_URL') {
+                return; // User has not configured Supabase yet
+            }
+
+            try {
+                const res = await fetch(`${supabaseUrl}/rest/v1/market_snapshot?order=fetched_at.desc&limit=1`, {
+                    headers: { 'apikey': anonKey, 'Accept': 'application/json' }
+                });
+
+                if (!res.ok) throw new Error('Network response structure was not ok');
+                const data = await res.json();
+                
+                if (data && data.length > 0) {
+                    populateMarketData(data[0]);
+                } else {
+                    showError();
+                }
+            } catch (err) {
+                console.error("Failed to fetch from Supabase:", err);
+                showError();
+            }
+        }
+
+        function showError() {
+            document.getElementById('market-error').classList.remove('hidden');
+            document.getElementById('news-loading').textContent = 'No announcements available.';
+        }
+
+        function populateMarketData(data) {
+            // Updated At
+            const fetchedAt = new Date(data.fetched_at);
+            const diffMins = Math.floor((new Date() - fetchedAt) / 60000);
+            document.getElementById('time-ago').textContent = diffMins;
+            document.getElementById('last-updated').classList.remove('hidden');
+
+            // Set Snapshots
+            document.getElementById('nifty50-val').textContent = formatMoney(data.nifty50_value);
+            document.getElementById('nifty50-chg').innerHTML = `${formatChg(data.nifty50_change)} (${data.nifty50_pct_change}%)`;
+
+            document.getElementById('niftybank-val').textContent = formatMoney(data.niftybank_value);
+            document.getElementById('niftybank-chg').innerHTML = `${formatChg(data.niftybank_change)} (${data.niftybank_pct_change}%)`;
+
+            document.getElementById('fii-val').innerHTML = `${data.fii_net || '--'} <span class="text-xs text-slate-400 font-normal">Cr</span>`;
+            if(data.fii_net) {
+                document.getElementById('fii-val').className = `text-2xl font-bold ${parseFloat(data.fii_net) >= 0 ? 'text-green-600' : 'text-red-600'}`;
+            }
+            document.getElementById('fii-date').textContent = data.fii_date || '';
+
+            document.getElementById('dii-val').innerHTML = `${data.dii_net || '--'} <span class="text-xs text-slate-400 font-normal">Cr</span>`;
+            if(data.dii_net) {
+                document.getElementById('dii-val').className = `text-2xl font-bold ${parseFloat(data.dii_net) >= 0 ? 'text-green-600' : 'text-red-600'}`;
+            }
+            document.getElementById('dii-date').textContent = data.fii_date || '';
+
+            // Table
+            if(data.fd_rates) {
+                let html = '';
+                for(const [bank, rates] of Object.entries(data.fd_rates)) {
+                    html += `<tr class="border-b border-slate-100 hover:bg-slate-50 transition">
+                        <td class="py-3 px-2 font-bold text-slate-800">${bank}</td>
+                        <td class="py-3 px-2">${rates['1yr'] || '--'}</td>
+                        <td class="py-3 px-2">${rates['2yr'] || '--'}</td>
+                        <td class="py-3 px-2">${rates['3yr'] || '--'}</td>
+                        <td class="py-3 px-2">${rates['5yr'] || '--'}</td>
+                    </tr>`;
+                }
+                document.getElementById('fd-table-body').innerHTML = html;
+            }
+
+            // Nifty Chart
+            if(data.nifty_trend) {
+                if (Array.isArray(data.nifty_trend)) {
+                    currentTrendData = { '30d': data.nifty_trend };
+                } else {
+                    currentTrendData = data.nifty_trend;
+                }
+                
+                const defaultRange = currentTrendData['1d'] ? '1d' : (currentTrendData['30d'] ? '30d' : Object.keys(currentTrendData)[0]);
+                if(defaultRange) {
+                    document.querySelectorAll('.trend-btn').forEach(b => {
+                        if(b.getAttribute('data-range') === defaultRange) {
+                            b.className = "trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all bg-white shadow-sm text-pink-600";
+                        } else {
+                            b.className = "trend-btn px-4 py-1 rounded-md text-xs font-bold transition-all text-slate-500 hover:text-slate-700";
+                        }
+                    });
+                    renderNiftyChart(defaultRange);
+                }
+            }
+
+            // News
+            let newsData = data.announcements || [];
+            const container = document.getElementById('news-container');
+            const loadMoreBtn = document.getElementById('load-more-news');
+            
+            if(newsData.length === 0) {
+                container.innerHTML = '<p class="text-slate-500">No announcements available.</p>';
+            } else {
+                container.innerHTML = '';
+            }
+
+            let visibleCount = 0;
+            const limit = 5;
+
+            const renderNews = () => {
+                const fragment = document.createDocumentFragment();
+                const toShow = newsData.slice(visibleCount, visibleCount + limit);
+                
+                toShow.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition';
+                    card.innerHTML = `
+                        <div class="flex flex-col md:flex-row justify-between md:items-center gap-2 mb-2">
+                            <span class="font-bold text-pink-600 text-sm tracking-wide uppercase">${item.company}</span>
+                            <span class="text-xs text-slate-400"><i class="far fa-clock mr-1"></i>${item.timestamp}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-lg mb-2">${item.headline}</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed">${item.description}</p>
+                    `;
+                    fragment.appendChild(card);
+                });
+                
+                container.appendChild(fragment);
+                visibleCount += toShow.length;
+
+                if (visibleCount < newsData.length) {
+                    loadMoreBtn.classList.remove('hidden');
+                } else {
+                    loadMoreBtn.classList.add('hidden');
+                }
+            };
+
+            renderNews();
+            loadMoreBtn.addEventListener('click', renderNews);
+        }
+
+        // 9d: SIP CALCULATOR LOGIC
+        let sipChartInstance = null;
+        let isLumpsum = false;
+        
+        function updateSipCalculator() {
+            const principal = parseFloat(document.getElementById('sip-monthly').value);
+            const rate = parseFloat(document.getElementById('sip-rate').value);
+            const years = parseInt(document.getElementById('sip-years').value);
+
+            document.getElementById('sip-monthly-label').textContent = formatMoney(principal);
+            document.getElementById('sip-rate-label').textContent = rate;
+            document.getElementById('sip-years-label').textContent = years;
+
+            let maturity = 0;
+            let invested = 0;
+
+            if (isLumpsum) {
+                invested = principal;
+                const r = rate / 100;
+                maturity = principal * Math.pow(1 + r, years);
+            } else {
+                invested = principal * (years * 12);
+                const r = (rate / 100) / 12;
+                const n = years * 12;
+                if (r > 0) {
+                    maturity = principal * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+                } else {
+                    maturity = invested;
+                }
+            }
+
+            const estReturns = maturity - invested;
+
+            document.getElementById('sip-invested-val').textContent = formatMoney(invested);
+            document.getElementById('sip-returns-val').textContent = formatMoney(estReturns);
+            document.getElementById('sip-total-val').textContent = formatMoney(maturity);
+
+            renderSipChart(invested, estReturns);
+        }
+
+        document.getElementById('calc-sip-btn').addEventListener('click', () => {
+            isLumpsum = false;
+            document.getElementById('calc-sip-btn').className = "px-6 py-1.5 rounded-md text-sm font-bold transition-all bg-white shadow-sm text-pink-600";
+            document.getElementById('calc-lumpsum-btn').className = "px-6 py-1.5 rounded-md text-sm font-bold transition-all text-slate-500 hover:text-slate-700";
+            
+            document.getElementById('inv-type-label').textContent = "Monthly Investment";
+            const slider = document.getElementById('sip-monthly');
+            slider.min = "100";
+            slider.max = "500000";
+            slider.step = "500";
+            if(parseFloat(slider.value) > 500000) slider.value = 5000;
+            
+            updateSipCalculator();
+        });
+
+        document.getElementById('calc-lumpsum-btn').addEventListener('click', () => {
+            isLumpsum = true;
+            document.getElementById('calc-lumpsum-btn').className = "px-6 py-1.5 rounded-md text-sm font-bold transition-all bg-white shadow-sm text-pink-600";
+            document.getElementById('calc-sip-btn').className = "px-6 py-1.5 rounded-md text-sm font-bold transition-all text-slate-500 hover:text-slate-700";
+            
+            document.getElementById('inv-type-label').textContent = "One-Time Investment";
+            const slider = document.getElementById('sip-monthly');
+            slider.min = "10000";
+            slider.max = "10000000"; // 1 Crore
+            slider.step = "5000";
+            if(parseFloat(slider.value) < 10000) slider.value = 100000;
+            
+            updateSipCalculator();
+        });
+
+        function renderSipChart(invested, returns) {
+            const ctx = document.getElementById('sipChart').getContext('2d');
+            
+            if (sipChartInstance) {
+                sipChartInstance.data.datasets[0].data = [invested, returns];
+                sipChartInstance.update();
+                return;
+            }
+
+            sipChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Total Invested', 'Est. Returns'],
+                    datasets: [{
+                        data: [invested, returns],
+                        backgroundColor: ['#e2e8f0', '#ec4899'], // slate-200, pink-500
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => ` ₹${formatMoney(ctx.raw)}`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        document.getElementById('sip-monthly').addEventListener('input', updateSipCalculator);
+        document.getElementById('sip-rate').addEventListener('input', updateSipCalculator);
+        document.getElementById('sip-years').addEventListener('input', updateSipCalculator);
+
+        // 9f: INFLATION CALCULATOR LOGIC
+        let infChartInstance = null;
+        
+        function updateInflationCalculator() {
+            const mode = document.getElementById('inf-expense-type').value; 
+            
+            let expVal = parseFloat(document.getElementById('inf-expense').value) || 0;
+            let rateVal = parseFloat(document.getElementById('inf-rate').value) || 0;
+            let yearsVal = parseInt(document.getElementById('inf-years').value) || 0;
+            let retYearsVal = parseInt(document.getElementById('inf-ret-years').value) || 0;
+            let retRateVal = parseFloat(document.getElementById('inf-ret-rate').value) || 0;
+
+            document.getElementById('inf-mode-text').textContent = mode === 'monthly' ? 'Monthly' : 'Yearly';
+
+            const currentExp = expVal;
+            const currentYearlyExp = mode === 'monthly' ? currentExp * 12 : currentExp;
+            
+            const infRate = rateVal / 100;
+            const n = yearsVal;
+            const futureExp = currentExp * Math.pow(1 + infRate, n);
+            const futureYearlyExp = currentYearlyExp * Math.pow(1 + infRate, n);
+
+            document.getElementById('inf-future-expense-val').textContent = formatMoney(futureExp);
+            document.getElementById('inf-future-yearly-val').textContent = formatMoney(futureYearlyExp);
+
+            const m = retYearsVal;
+            const r = retRateVal / 100;
+            const realRate = ((1 + r) / (1 + infRate)) - 1;
+            
+            let corpus = 0;
+            if (realRate === 0) {
+                 corpus = futureYearlyExp * m;
+            } else {
+                 corpus = futureYearlyExp * ((1 - Math.pow(1 + realRate, -m)) / realRate) * (1 + realRate);
+            }
+
+            let displayCorpus = formatMoney(corpus);
+            if(corpus >= 10000000) displayCorpus = (corpus / 10000000).toFixed(2) + ' Cr';
+            else if(corpus >= 100000) displayCorpus = (corpus / 100000).toFixed(2) + ' L';
+            else displayCorpus = formatMoney(corpus);
+            
+            document.getElementById('inf-corpus-val').textContent = displayCorpus;
+
+            renderInfChart(currentYearlyExp, futureYearlyExp);
+        }
+
+        function syncInputs(idRange, idInput, callback) {
+            const range = document.getElementById(idRange);
+            const input = document.getElementById(idInput);
+            
+            range.addEventListener('input', () => {
+                input.value = range.value;
+                callback();
+            });
+            input.addEventListener('change', () => {
+                let v = parseFloat(input.value);
+                let min = parseFloat(range.min);
+                let max = parseFloat(range.max);
+                if (v < min) input.value = min;
+                if (v > max) input.value = max;
+                range.value = input.value;
+                callback();
+            });
+        }
+
+        function renderInfChart(curr, fut) {
+             const ctx = document.getElementById('inflationChart').getContext('2d');
+            
+            if (infChartInstance) {
+                infChartInstance.data.datasets[0].data = [curr, fut];
+                infChartInstance.update();
+                return;
+            }
+
+            infChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Current Yearly', 'Future Yearly'],
+                    datasets: [{
+                        data: [curr, fut],
+                        backgroundColor: ['#e2e8f0', '#ec4899'],
+                        borderRadius: 6,
+                        borderWidth: 0,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: (ctx) => ` ₹${formatMoney(ctx.raw)}` } }
+                    },
+                    scales: {
+                         x: { grid: { display: false }, border: {display: false} },
+                         y: { display: false }
+                    }
+                }
+            });
+        }
+
+        document.getElementById('inf-expense-type').addEventListener('change', () => {
+            const range = document.getElementById('inf-expense');
+            const input = document.getElementById('inf-expense-input');
+            const mode = document.getElementById('inf-expense-type').value;
+            if (mode === 'monthly') {
+                range.min = 5000; range.max = 500000; range.step = 1000;
+                if(range.value >= 500000) { range.value = 50000; input.value = 50000; }
+            } else {
+                range.min = 60000; range.max = 6000000; range.step = 10000;
+                if(range.value <= 500000) { range.value = range.value * 12; input.value = input.value * 12; }
+            }
+            updateInflationCalculator();
+        });
+        
+        syncInputs('inf-expense', 'inf-expense-input', updateInflationCalculator);
+        syncInputs('inf-rate', 'inf-rate-input', updateInflationCalculator);
+        syncInputs('inf-years', 'inf-years-input', updateInflationCalculator);
+        syncInputs('inf-ret-years', 'inf-ret-years-input', updateInflationCalculator);
+        syncInputs('inf-ret-rate', 'inf-ret-rate-input', updateInflationCalculator);
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSipCalculator();
+            updateInflationCalculator();
+            fetchMarketData();
+        });
+    </script>
+
+    <!-- Mobile Sticky CTA Bar -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-2 flex justify-between items-center z-50 md:hidden shadow-[0_-4px_10px_rgba(0,0,0,0.1)] pb-safe">
+        <a href="tel:03345013342" class="flex flex-col items-center justify-center text-slate-600 hover:text-pink-500 text-[10px] font-bold w-1/3 py-1">
+            <i class="fas fa-phone-alt text-xl mb-1"></i> Call
+        </a>
+        <a href="https://wa.me/910000000000" class="flex flex-col items-center justify-center text-green-500 hover:text-green-600 text-[10px] font-bold w-1/3 border-l border-r border-slate-100 py-1">
+            <i class="fab fa-whatsapp text-xl mb-1"></i> WhatsApp
+        </a>
+        <a href="contact.html" class="flex flex-col items-center justify-center text-pink-500 hover:text-pink-600 text-[10px] font-bold w-1/3 py-1">
+            <i class="fas fa-clipboard-check text-xl mb-1"></i> Eligibility
+        </a>
+    </div>
+    <style>
+        @media (max-width: 768px) {
+            body { padding-bottom: 70px; }
+            .pb-safe { padding-bottom: env(safe-area-inset-bottom, 8px); }
+        }
+    </style>
+</body>
+</html>

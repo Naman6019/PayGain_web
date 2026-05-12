@@ -24,9 +24,14 @@ CREATE TABLE IF NOT EXISTS analysis_requests (
     id SERIAL PRIMARY KEY,
     created_at TIMESTAMPTZ DEFAULT now(),
     full_name TEXT NOT NULL,
+    age INTEGER,
     mobile_number TEXT NOT NULL,
+    whatsapp_number TEXT,
     email_address TEXT NOT NULL,
     city TEXT NOT NULL,
+    occupation TEXT,
+    gender TEXT,
+    message TEXT,
     interested_product TEXT NOT NULL,
     details JSONB
 );

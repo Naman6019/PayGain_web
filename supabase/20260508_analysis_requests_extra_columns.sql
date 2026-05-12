@@ -1,0 +1,6 @@
+ALTER TABLE analysis_requests
+    ADD COLUMN IF NOT EXISTS age INTEGER,
+    ADD COLUMN IF NOT EXISTS whatsapp_number TEXT,
+    ADD COLUMN IF NOT EXISTS occupation TEXT,
+    ADD COLUMN IF NOT EXISTS gender TEXT,
+    ADD COLUMN IF NOT EXISTS message TEXT;
